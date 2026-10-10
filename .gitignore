@@ -1,0 +1,13 @@
+# build output
+/dist/
+/bin/
+/prosvet
+/prosvet.exe
+# local scan output (submitted results live in results/<asn>/ and are committed via PR)
+/reports/
+*.local.json
+# tooling
+/coverage.out
+/.idea/
+/.vscode/
+.DS_Store

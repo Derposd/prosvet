@@ -1,0 +1,52 @@
+# Sets for `prosvet whitelist` (docs/research.md §5.8, §7.3).
+#
+# domestic: services from the Ministry of Digital Development lists, spread across ≥6 companies/ASNs.
+# foreign:  control hosts that are normally NOT blocked in Russia, spread across ≥6 ASNs.
+#           Only the TLS handshake and first response bytes count, so the 16–20 KB freeze does not affect the verdict.
+# ca: russian-trusted  The host may present a certificate from the Russian Trusted Root CA. That is expected and not a failure.
+version: 1
+kind: whitelist
+category: whitelist
+title: { ru: "Белые списки", en: "Whitelist mode" }
+default: false
+refs: [S38, S39, S40, S41, S42]
+
+thresholds:
+  domestic_ok: 0.7     # rD ≥ → domestic works
+  foreign_max: 0.15    # rF ≤ → foreign is cut off → whitelist active
+  dead: 0.3            # rD < and rF < → no connectivity
+  normal: 0.7          # rD ≥ and rF ≥ → normal network
+
+domestic:
+  - { host: www.gosuslugi.ru, org: "Госуслуги" }
+  - { host: www.nalog.gov.ru, org: "ФНС" }
+  - { host: www.mos.ru, org: "Правительство Москвы" }
+  - { host: ya.ru, org: "Яндекс" }
+  - { host: www.kinopoisk.ru, org: "Яндекс" }
+  - { host: vk.com, org: "VK" }
+  - { host: ok.ru, org: "VK" }
+  - { host: mail.ru, org: "VK" }
+  - { host: max.ru, org: "VK" }
+  - { host: dzen.ru, org: "VK" }
+  - { host: rutube.ru, org: "Газпром-Медиа" }
+  - { host: www.ozon.ru, org: "Ozon" }
+  - { host: www.wildberries.ru, org: "Wildberries" }
+  - { host: www.avito.ru, org: "Avito" }
+  - { host: www.rzd.ru, org: "РЖД" }
+  - { host: 2gis.ru, org: "2ГИС" }
+  - { host: www.vtb.ru, org: "ВТБ", ca: russian-trusted }
+  - { host: online.sberbank.ru, org: "Сбер", ca: russian-trusted }
+
+foreign:
+  - { host: www.google.com, org: "Google" }
+  - { host: www.wikipedia.org, org: "Wikimedia" }
+  - { host: github.com, org: "GitHub" }
+  - { host: www.microsoft.com, org: "Microsoft/Akamai" }
+  - { host: www.apple.com, org: "Apple" }
+  - { host: www.amazon.com, org: "Amazon" }
+  - { host: www.mozilla.org, org: "Mozilla" }
+  - { host: www.python.org, org: "Fastly" }
+  - { host: www.ietf.org, org: "IETF/Cloudflare" }
+  - { host: www.debian.org, org: "Debian" }
+  - { host: www.cloudflare.com, org: "Cloudflare" }
+  - { host: www.ovhcloud.com, org: "OVH" }

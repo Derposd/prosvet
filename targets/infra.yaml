@@ -1,0 +1,122 @@
+# CDN and hosting providers, used mainly for the "TCP 16-20" freeze test (docs/research.md §5.5).
+# Every throttle_url must point to a public, stable file well over 34 KB; Prosvet reads at most 256 KB.
+# role: baseline marks domestic mirrors used as the speed reference. They are not classified as targets.
+# verified: false means the URL was not reachable from the build environment (2026-10-10); confirm before release.
+version: 1
+category: infra
+title: { ru: "CDN и хостинги", en: "CDN & hosting" }
+default: true
+targets:
+  - id: cloudflare
+    name: Cloudflare
+    expect: throttled
+    since: "2025-06-09"
+    refs: [S15, S16]
+    throttle_url: https://speed.cloudflare.com/__down?bytes=262144
+    endpoints:
+      - { host: www.cloudflare.com }
+      - { host: speed.cloudflare.com }
+
+  - id: hetzner
+    name: Hetzner
+    expect: throttled
+    since: "2025-06"
+    refs: [S15, S16, S17]
+    throttle_url: https://nbg1-speed.hetzner.com/100MB.bin
+    verified: false
+    endpoints:
+      - { host: www.hetzner.com }
+      - { host: nbg1-speed.hetzner.com }
+
+  - id: digitalocean
+    name: DigitalOcean
+    expect: throttled
+    since: "2025-06"
+    refs: [S15, S16, S17]
+    throttle_url: https://speedtest-ams3.digitalocean.com/10mb.test
+    verified: false
+    endpoints:
+      - { host: www.digitalocean.com }
+      - { host: speedtest-ams3.digitalocean.com }
+
+  - id: ovh
+    name: OVHcloud
+    expect: throttled
+    since: "2025-06"
+    refs: [S15, S16]
+    throttle_url: https://proof.ovh.net/files/10Mb.dat
+    endpoints:
+      - { host: proof.ovh.net }
+
+  - id: vultr
+    name: Vultr
+    expect: unknown
+    refs: []
+    throttle_url: https://fra-de-ping.vultr.com/vultr.com.100MB.bin
+    endpoints:
+      - { host: fra-de-ping.vultr.com }
+
+  - id: akamai-linode
+    name: Akamai (Linode)
+    expect: unknown
+    refs: []
+    throttle_url: https://speedtest.frankfurt.linode.com/100MB-frankfurt.bin
+    endpoints:
+      - { host: speedtest.frankfurt.linode.com }
+
+  - id: aws
+    name: Amazon Web Services
+    expect: unknown
+    refs: [S43]
+    throttle_url: https://ip-ranges.amazonaws.com/ip-ranges.json
+    endpoints:
+      - { host: ip-ranges.amazonaws.com }
+      - { host: aws.amazon.com }
+
+  - id: fastly
+    name: Fastly
+    expect: unknown
+    refs: []
+    throttle_url: https://dl-cdn.alpinelinux.org/alpine/v3.20/main/x86_64/APKINDEX.tar.gz
+    endpoints:
+      - { host: dl-cdn.alpinelinux.org }
+
+  - id: google-cdn
+    name: Google CDN
+    expect: unknown
+    refs: []
+    throttle_url: https://dl.google.com/go/go1.23.0.src.tar.gz
+    endpoints:
+      - { host: dl.google.com }
+
+  - id: github
+    name: GitHub
+    expect: unknown
+    refs: []
+    notes:
+      ru: "Отсюда пользователи скачивают Prosvet, поэтому доступность GitHub важна сама по себе."
+      en: "Users download Prosvet from GitHub, so its reachability matters in its own right."
+    throttle_url: https://raw.githubusercontent.com/golang/go/go1.23.0/src/runtime/proc.go
+    endpoints:
+      - { host: github.com }
+      - { host: raw.githubusercontent.com }
+      - { host: objects.githubusercontent.com }
+
+  # Domestic speed references.
+  - id: baseline-yandex
+    name: Yandex mirror
+    role: baseline
+    expect: ok
+    refs: []
+    throttle_url: https://mirror.yandex.ru/debian/ls-lR.gz
+    endpoints:
+      - { host: mirror.yandex.ru }
+
+  - id: baseline-selectel
+    name: Selectel mirror
+    role: baseline
+    expect: ok
+    refs: []
+    throttle_url: https://mirror.selectel.ru/debian/ls-lR.gz
+    endpoints:
+      - { host: mirror.selectel.ru }

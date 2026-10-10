@@ -1,0 +1,39 @@
+version: 1
+category: video
+title: { ru: "Видео и стриминг", en: "Video & streaming" }
+default: true
+targets:
+  - id: youtube
+    name: YouTube
+    expect: blocked
+    since: "2024-07-11"
+    refs: [S10, S11, S12, S13, S14]
+    notes:
+      ru: "Замедление с 07.2024, удаление из НСДИ 10–12.02.2026. Видеопоток идёт через *.googlevideo.com."
+      en: "Throttled since 2024-07, removed from the National DNS on 2026-02-10/12. Video is served from *.googlevideo.com."
+    throttle_url: https://www.youtube.com/
+    endpoints:
+      - { host: youtube.com, http80: true }
+      - { host: www.youtube.com, quic: true }
+      - { host: m.youtube.com }
+      - { host: youtubei.googleapis.com, note: "app API" }
+      - { host: i.ytimg.com, note: "thumbnails" }
+      - { host: yt3.ggpht.com, note: "avatars" }
+      - { host: redirector.googlevideo.com, note: "video CDN entry point" }
+
+  - id: twitch
+    name: Twitch
+    expect: unknown
+    refs: []
+    endpoints:
+      - { host: www.twitch.tv }
+      - { host: gql.twitch.tv }
+      - { host: static-cdn.jtvnw.net }
+
+  - id: vimeo
+    name: Vimeo
+    expect: unknown
+    refs: []
+    endpoints:
+      - { host: vimeo.com }
+      - { host: player.vimeo.com }

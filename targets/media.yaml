@@ -1,0 +1,106 @@
+# Independent media and reference resources. This category is OPT-IN: `prosvet scan --category media`.
+# Your ISP can see that these sites were checked (docs/research.md §9).
+# Prosvet only checks reachability: it fetches the front page and stores no content.
+version: 1
+category: media
+title: { ru: "СМИ и справочные ресурсы", en: "Media & reference" }
+default: false
+consent:
+  ru: "Провайдер может увидеть, что вы проверяли доступность этих сайтов. Продолжить?"
+  en: "Your ISP may see that you checked these sites. Continue?"
+targets:
+  - id: meduza
+    name: Meduza
+    expect: blocked
+    refs: [S22]
+    endpoints:
+      - { host: meduza.io, http80: true }
+
+  - id: novayagazeta-eu
+    name: Новая газета Европа
+    expect: blocked
+    refs: [S9]
+    endpoints:
+      - { host: novayagazeta.eu, http80: true }
+
+  - id: mediazona
+    name: Медиазона
+    expect: blocked
+    refs: [S22]
+    endpoints:
+      - { host: zona.media, http80: true }
+
+  - id: the-insider
+    name: The Insider
+    expect: blocked
+    refs: [S9]
+    endpoints:
+      - { host: theins.ru, http80: true }
+
+  - id: svoboda
+    name: Радио Свобода
+    expect: blocked
+    refs: [S22]
+    endpoints:
+      - { host: www.svoboda.org, http80: true }
+
+  - id: bbc
+    name: BBC
+    expect: blocked
+    refs: [S22]
+    endpoints:
+      - { host: www.bbc.com, path: /russian, http80: true }
+
+  - id: dw
+    name: Deutsche Welle
+    expect: blocked
+    refs: [S22]
+    endpoints:
+      - { host: www.dw.com, http80: true }
+
+  - id: tvrain
+    name: Дождь
+    expect: blocked
+    refs: [S22]
+    endpoints:
+      - { host: tvrain.tv, http80: true }
+
+  - id: verstka
+    name: Вёрстка
+    expect: unknown
+    refs: []
+    endpoints:
+      - { host: verstka.media }
+
+  - id: archive-today
+    name: archive.today
+    expect: blocked
+    since: "2026-03-23"
+    refs: [S66]
+    endpoints:
+      - { host: archive.ph }
+      - { host: archive.today }
+
+  - id: ooni-explorer
+    name: OONI Explorer
+    expect: blocked
+    since: "2024-09"
+    refs: [S61]
+    endpoints:
+      - { host: explorer.ooni.org }
+      - { host: api.ooni.io }
+
+  - id: torproject
+    name: Tor Project (website)
+    expect: blocked
+    refs: [S78]
+    endpoints:
+      - { host: www.torproject.org }
+
+  - id: wikipedia-ru
+    name: Википедия (ru)
+    role: control
+    expect: ok
+    refs: []
+    endpoints:
+      - { host: ru.wikipedia.org }

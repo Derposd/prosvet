@@ -1,0 +1,103 @@
+# DNS resolvers and interception probes (docs/research.md §5.1).
+#
+# resolvers:      every probe domain is resolved through each resolver and transport.
+#                 Failures are results too: a blocked DoH endpoint is itself a finding.
+# probe_domains:  domains compared across resolvers. Consistency is checked by validating
+#                 TLS to the returned IPs, not by ASN lookups.
+# interception:   queries whose answers reveal transparent DNS proxying (DNAT to the NSDI).
+#                 Answers can contain the user's IP: Prosvet checks only presence and format
+#                 and never stores the value.
+version: 1
+kind: resolvers
+category: dns
+title: { ru: "DNS", en: "DNS" }
+default: true
+
+resolvers:
+  - id: system
+    name: { ru: "Системный резолвер", en: "System resolver" }
+    type: system
+
+  - id: nsdi
+    name: { ru: "НСДИ (национальная DNS)", en: "NSDI (Russian national DNS)" }
+    role: official_reference
+    refs: [S9, S33]
+    udp: ["195.208.4.1", "195.208.5.1"]
+
+  - id: cloudflare
+    name: Cloudflare
+    refs: [S27, S28]
+    udp: ["1.1.1.1", "1.0.0.1"]
+    dot: { host: one.one.one.one, addr: "1.1.1.1:853" }
+    doh: https://cloudflare-dns.com/dns-query
+
+  - id: google
+    name: Google Public DNS
+    refs: [S27, S28, S31]
+    udp: ["8.8.8.8", "8.8.4.4"]
+    dot: { host: dns.google, addr: "8.8.8.8:853" }
+    doh: https://dns.google/dns-query
+
+  - id: quad9
+    name: Quad9
+    refs: [S31]
+    udp: ["9.9.9.9"]
+    dot: { host: dns.quad9.net, addr: "9.9.9.9:853" }
+    doh: https://dns.quad9.net/dns-query
+
+  - id: adguard
+    name: AdGuard DNS (unfiltered)
+    refs: [S31]
+    udp: ["94.140.14.140"]
+    doh: https://unfiltered.adguard-dns.com/dns-query
+
+  - id: yandex
+    name: Yandex DNS
+    role: domestic
+    refs: []
+    udp: ["77.88.8.8", "77.88.8.1"]
+    dot: { host: common.dot.dns.yandex.net, addr: "77.88.8.8:853" }
+    doh: https://common.dot.dns.yandex.net/dns-query
+
+# DoH fallback order used to obtain a reference answer for targets.
+doh_reference_order: [cloudflare, quad9, adguard, google]
+
+probe_domains:
+  - { name: youtube.com, note: "removed from NSDI 2026-02" }
+  - { name: www.youtube.com }
+  - { name: whatsapp.com, note: "removed from NSDI 2026-02" }
+  - { name: facebook.com, note: "removed from NSDI 2026-02" }
+  - { name: instagram.com }
+  - { name: telegram.org }
+  - { name: discord.com }
+  - { name: example.com, role: control }
+  - { name: ya.ru, role: control }
+
+interception:
+  - id: cloudflare-whoami
+    resolver: "1.1.1.1"
+    qname: whoami.cloudflare
+    qclass: CH
+    qtype: TXT
+    expect: nonempty
+  - id: cloudflare-id-server
+    resolver: "1.1.1.1"
+    qname: id.server
+    qclass: CH
+    qtype: TXT
+    expect: colo_code          # three-letter IATA code, e.g. "FRA"
+  - id: google-myaddr
+    resolver: "8.8.8.8"
+    qname: o-o.myaddr.l.google.com
+    qtype: TXT
+    expect: nonempty
+  - id: google-nsdi-leak
+    resolver: "8.8.8.8"
+    qname: youtube.com
+    qtype: A
+    expect: noerror            # NXDOMAIN here means the query was answered by the NSDI, not by Google
+  - id: cloudflare-nsdi-leak
+    resolver: "1.1.1.1"
+    qname: whatsapp.com
+    qtype: A
+    expect: noerror

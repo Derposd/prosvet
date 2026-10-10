@@ -1,0 +1,64 @@
+version: 1
+category: google
+title: { ru: "Сервисы Google", en: "Google services" }
+default: true
+targets:
+  - id: google-search
+    name: Google Search
+    expect: unknown
+    refs: [S55]
+    notes:
+      ru: "Подтверждённой блокировки нет; 27.07.2026 РКН пригрозил замедлением."
+      en: "No confirmed block; Roskomnadzor threatened throttling on 2026-07-27."
+    throttle_url: https://www.google.com/
+    endpoints:
+      - { host: www.google.com, quic: true, http80: true }
+      - { host: google.com }
+
+  - id: gmail
+    name: Gmail
+    expect: unknown
+    refs: [S55]
+    endpoints:
+      - { host: mail.google.com }
+      - { host: gmail.com }
+
+  - id: google-play
+    name: Google Play
+    expect: unknown
+    refs: []
+    endpoints:
+      - { host: play.google.com }
+      - { host: play.googleapis.com }
+      - { host: android.clients.google.com }
+
+  - id: google-static
+    name: Google APIs & Fonts
+    expect: unknown
+    refs: []
+    notes:
+      ru: "От этих хостов зависят тысячи сторонних сайтов и приложений."
+      en: "Thousands of third-party sites and apps depend on these hosts."
+    endpoints:
+      - { host: www.googleapis.com }
+      - { host: fonts.googleapis.com }
+      - { host: fonts.gstatic.com }
+      - { host: www.gstatic.com }
+
+  - id: google-drive
+    name: Google Drive & Docs
+    expect: unknown
+    refs: []
+    endpoints:
+      - { host: drive.google.com }
+      - { host: docs.google.com }
+
+  - id: fcm-push
+    name: Android push (FCM)
+    expect: unknown
+    refs: []
+    notes:
+      ru: "Канал push-уведомлений Android. Если недоступен, уведомления в приложениях приходят с задержкой или не приходят."
+      en: "Android push channel. If unreachable, app notifications are delayed or lost."
+    endpoints:
+      - { host: mtalk.google.com, port: 5228, tests: [dns, tcp, tls] }

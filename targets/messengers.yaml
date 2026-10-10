@@ -1,0 +1,92 @@
+version: 1
+category: messengers
+title: { ru: "Мессенджеры", en: "Messengers" }
+default: true
+targets:
+  - id: telegram
+    name: Telegram
+    expect: blocked
+    since: "2026-02-10"
+    refs: [S1, S2, S3, S4, S5]
+    notes:
+      ru: "Замедление с 10.02.2026, ~95% блокировки к апрелю 2026; звонки ограничены с 08.2025."
+      en: "Throttled since 2026-02-10, ~95% blocked by April 2026; calls restricted since 2025-08."
+    endpoints:
+      - { host: telegram.org, http80: true }
+      - { host: web.telegram.org, quic: true }
+      - { host: t.me }
+      - { host: api.telegram.org }
+      # MTProto DC addresses from public client configs. Verify before release.
+      - { addr: "149.154.175.53:443", tests: [tcp, tls_nosni], note: "DC1" }
+      - { addr: "149.154.167.51:443", tests: [tcp, tls_nosni], note: "DC2" }
+      - { addr: "149.154.175.100:443", tests: [tcp, tls_nosni], note: "DC3" }
+      - { addr: "149.154.167.91:443", tests: [tcp, tls_nosni], note: "DC4" }
+      - { addr: "91.108.56.130:443", tests: [tcp, tls_nosni], note: "DC5" }
+
+  - id: whatsapp
+    name: WhatsApp
+    expect: blocked
+    since: "2026-02-12"
+    refs: [S6, S7, S8, S9]
+    notes:
+      ru: "Удалён из НСДИ 11–12.02.2026 (NXDOMAIN у провайдеров) + DPI; звонки с 08.2025."
+      en: "Removed from the National DNS on 2026-02-11/12 (NXDOMAIN at ISPs) plus DPI; calls since 2025-08."
+    throttle_url: https://web.whatsapp.com/
+    endpoints:
+      - { host: whatsapp.com, http80: true }
+      - { host: web.whatsapp.com }
+      - { host: g.whatsapp.net, note: "chat" }
+      - { host: mmg.whatsapp.net, note: "media" }
+      - { host: static.whatsapp.net }
+
+  - id: signal
+    name: Signal
+    expect: blocked
+    since: "2024-08"
+    refs: [S52, S78]
+    endpoints:
+      - { host: signal.org, http80: true }
+      - { host: chat.signal.org }
+      - { host: cdn.signal.org }
+      - { host: updates.signal.org }
+
+  - id: viber
+    name: Viber
+    expect: blocked
+    since: "2024-12"
+    refs: [S52, S78]
+    endpoints:
+      - { host: viber.com, http80: true }
+      - { host: www.viber.com }
+
+  - id: discord
+    name: Discord
+    expect: blocked
+    since: "2024-10-08"
+    refs: [S51, S71]
+    throttle_url: https://discord.com/
+    endpoints:
+      - { host: discord.com, http80: true, quic: true }
+      - { host: gateway.discord.gg }
+      - { host: cdn.discordapp.com }
+      - { host: media.discordapp.net }
+
+  - id: snapchat
+    name: Snapchat
+    expect: blocked
+    since: "2025-10"
+    refs: [S49, S75]
+    throttle_url: https://www.snapchat.com/
+    endpoints:
+      - { host: www.snapchat.com, http80: true }
+      - { host: app.snapchat.com }
+      - { host: accounts.snapchat.com }
+
+  # Domestic control: expected to work, including in whitelist mode.
+  - id: max
+    name: Max
+    expect: ok
+    refs: [S9, S38]
+    endpoints:
+      - { host: max.ru }
+      - { host: web.max.ru }

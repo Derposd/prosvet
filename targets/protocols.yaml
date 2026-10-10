@@ -1,0 +1,51 @@
+# Protocol-level probes: QUIC/HTTP3 and Encrypted Client Hello (docs/research.md §5.4, §5.6).
+# The scheduler runs QUIC probes after all TCP probes and uses a fresh UDP port per attempt,
+# because a filtered QUIC flow is blackholed for ~420 s.
+version: 1
+category: protocols
+title: { ru: "Протоколы", en: "Protocols" }
+default: true
+targets:
+  - id: quic-cloudflare
+    name: QUIC — Cloudflare
+    expect: partial
+    since: "2022-03"
+    refs: [S23, S24]
+    endpoints:
+      - { host: cloudflare-quic.com, tests: [dns, tls, quic], quic_versions: [1, 2] }
+
+  - id: quic-google
+    name: QUIC — Google
+    expect: partial
+    refs: [S23, S24]
+    endpoints:
+      - { host: www.google.com, tests: [quic], quic_versions: [1, 2] }
+
+  - id: quic-youtube
+    name: QUIC — YouTube
+    expect: blocked
+    refs: [S10, S23]
+    endpoints:
+      - { host: www.youtube.com, tests: [quic], quic_versions: [1, 2] }
+
+  - id: quic-yandex
+    name: QUIC — Yandex (control)
+    role: control
+    expect: ok
+    refs: []
+    notes:
+      ru: "Отечественный контроль: разделяет вердикты «UDP/QUIC заблокирован целиком» и «фильтр по SNI»."
+      en: "Domestic control: separates 'UDP/QUIC blocked entirely' from 'SNI filter'."
+    endpoints:
+      - { host: ya.ru, tests: [quic] }
+
+  - id: ech-cloudflare
+    name: Encrypted Client Hello — Cloudflare
+    expect: blocked
+    since: "2024-11-06"
+    refs: [S25, S26, S76]
+    notes:
+      ru: "Блокируется сочетание внешнего SNI cloudflare-ech.com и расширения ECH. Конфигурация ECH берётся из DNS-записи HTTPS через DoH."
+      en: "The combination of outer SNI cloudflare-ech.com and the ECH extension is blocked. ECH config is fetched from the HTTPS DNS record over DoH."
+    endpoints:
+      - { host: crypto.cloudflare.com, path: /cdn-cgi/trace, tests: [dns, tcp, tls, ech] }

@@ -1,0 +1,78 @@
+version: 1
+category: social
+title: { ru: "Соцсети", en: "Social networks" }
+default: true
+targets:
+  - id: instagram
+    name: Instagram
+    expect: blocked
+    since: "2022-03-14"
+    refs: [S22]
+    throttle_url: https://www.instagram.com/
+    endpoints:
+      - { host: instagram.com, http80: true }
+      - { host: www.instagram.com, quic: true }
+      - { host: i.instagram.com, note: "API" }
+      - { host: static.cdninstagram.com }
+      - { host: scontent.cdninstagram.com, note: "media CDN" }
+
+  - id: facebook
+    name: Facebook
+    expect: blocked
+    since: "2022-03-04"
+    refs: [S9, S22]
+    notes:
+      ru: "Заблокирован с 2022; в 02.2026 удалён из НСДИ."
+      en: "Blocked since 2022; removed from the National DNS in 2026-02."
+    endpoints:
+      - { host: facebook.com, http80: true }
+      - { host: www.facebook.com }
+      - { host: static.xx.fbcdn.net }
+      - { host: connect.facebook.net }
+
+  - id: x
+    name: X (Twitter)
+    expect: blocked
+    since: "2022-03-04"
+    refs: [S21, S22]
+    notes:
+      ru: "В 2021 — первое массовое замедление по SNI (130–150 кбит/с), с 2022 — RST после ClientHello."
+      en: "2021: first large-scale SNI throttling (130–150 kbps); since 2022: RST after ClientHello."
+    endpoints:
+      - { host: x.com, http80: true }
+      - { host: twitter.com }
+      - { host: api.x.com }
+      - { host: abs.twimg.com }
+      - { host: pbs.twimg.com, note: "media CDN" }
+
+  - id: linkedin
+    name: LinkedIn
+    expect: blocked
+    since: "2016-11"
+    refs: [S77]
+    throttle_url: https://www.linkedin.com/
+    endpoints:
+      - { host: www.linkedin.com, http80: true }
+      - { host: static.licdn.com }
+
+  - id: threads
+    name: Threads
+    expect: unknown
+    refs: []
+    endpoints:
+      - { host: www.threads.com }
+      - { host: www.threads.net }
+
+  - id: tiktok
+    name: TikTok
+    expect: unknown
+    refs: []
+    endpoints:
+      - { host: www.tiktok.com }
+
+  - id: reddit
+    name: Reddit
+    expect: unknown
+    refs: []
+    endpoints:
+      - { host: www.reddit.com }

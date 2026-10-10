@@ -1,0 +1,92 @@
+version: 1
+category: gaming
+title: { ru: "Игровые сервисы", en: "Gaming services" }
+default: true
+targets:
+  - id: steam
+    name: Steam
+    expect: partial
+    since: "2026-02"
+    refs: [S53]
+    notes:
+      ru: "С 02.2026 доступность ниже обычной на ~5%; официальной блокировки нет."
+      en: "Availability ~5% below normal since 2026-02; no official block."
+    throttle_url: https://store.steampowered.com/
+    endpoints:
+      - { host: store.steampowered.com, http80: true }
+      - { host: steamcommunity.com }
+      - { host: api.steampowered.com }
+      - { host: cdn.akamai.steamstatic.com, note: "content CDN" }
+
+  - id: epic
+    name: Epic Games
+    expect: partial
+    since: "2026-02"
+    refs: [S53]
+    endpoints:
+      - { host: store.epicgames.com }
+      - { host: www.epicgames.com }
+      - { host: launcher-public-service-prod06.ol.epicgames.com, note: "launcher API" }
+
+  - id: battlenet
+    name: Battle.net
+    expect: partial
+    since: "2026-07-08"
+    refs: [S54]
+    notes:
+      ru: "С 08.07.2026 ошибка 30008 в Diablo IV, WoW и Overwatch; причина не подтверждена."
+      en: "Error 30008 in Diablo IV, WoW and Overwatch since 2026-07-08; cause unconfirmed."
+    endpoints:
+      - { host: battle.net }
+      - { host: eu.battle.net }
+      - { host: account.battle.net }
+
+  - id: xbox
+    name: Xbox Live
+    expect: partial
+    since: "2026-02"
+    refs: [S53]
+    endpoints:
+      - { host: www.xbox.com }
+      - { host: user.auth.xboxlive.com }
+      - { host: xsts.auth.xboxlive.com }
+
+  - id: playstation
+    name: PlayStation Network
+    expect: partial
+    since: "2026-02"
+    refs: [S53]
+    endpoints:
+      - { host: www.playstation.com }
+      - { host: store.playstation.com }
+      - { host: my.account.sony.com }
+
+  - id: ea
+    name: EA app (Origin)
+    expect: partial
+    since: "2026-02"
+    refs: [S53]
+    endpoints:
+      - { host: www.ea.com }
+      - { host: accounts.ea.com }
+
+  - id: roblox
+    name: Roblox
+    expect: ok
+    since: "2026-06-10"
+    refs: [S49, S50]
+    notes:
+      ru: "Заблокирован 03.12.2025, разблокирован 10.06.2026 (чат ограничен). Регрессионный контроль."
+      en: "Blocked 2025-12-03, unblocked 2026-06-10 (chat restricted). Regression control."
+    endpoints:
+      - { host: www.roblox.com }
+      - { host: apis.roblox.com }
+      - { host: setup.rbxcdn.com }
+
+  - id: riot
+    name: Riot Games
+    expect: unknown
+    refs: []
+    endpoints:
+      - { host: www.riotgames.com }
+      - { host: auth.riotgames.com }
