@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "🔒 Security vulnerability / Уязвимость"
+    url: https://github.com/ordinarysim/prosvet/security/advisories/new
+    about: "Report privately, not as a public issue. / Сообщайте приватно."
+  - name: "💬 Questions & ideas / Вопросы и идеи"
+    url: https://github.com/ordinarysim/prosvet/discussions
+    about: "Ask questions and discuss results. / Вопросы и обсуждение результатов."

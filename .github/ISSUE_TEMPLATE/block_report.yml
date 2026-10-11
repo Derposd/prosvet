@@ -1,0 +1,39 @@
+name: "🚧 Blocking report / Сообщение о блокировке"
+description: "Describe a new or unusual blocking method you observed. / Новый или необычный способ блокировки."
+labels: ["blocking-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to describe *how* something is blocked (new method, wrong verdict, regional change).
+        To add plain measurements to the map, use **Submit results** instead.
+        Используйте форму, чтобы описать *как* что-то блокируется. Чтобы просто добавить измерения на карту — форма **«Отправить результаты»**.
+  - type: input
+    id: service
+    attributes:
+      label: "Service / Сервис"
+    validations:
+      required: true
+  - type: input
+    id: network
+    attributes:
+      label: "Provider and region / Провайдер и регион"
+      description: "e.g. AS12389 Rostelecom, RU-MOW, fixed. No IP addresses! / Без IP-адресов!"
+    validations:
+      required: true
+  - type: input
+    id: since
+    attributes:
+      label: "Since when / С какого времени"
+  - type: textarea
+    id: observed
+    attributes:
+      label: "What Prosvet shows and what you think is happening / Что показывает Prosvet и что, по-вашему, происходит"
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: "Report / Отчёт"
+      description: "Output of `prosvet scan -t <id> -f json` (it contains no IP address of yours, but please review it)."
+      render: json

@@ -35,6 +35,19 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: go tool cover -func=coverage.out | tail -1
 
+  test-32bit:
+    # Routers (mips, armv7) are 32-bit: catch int overflows early.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Test (GOARCH=386)
+        env:
+          GOARCH: "386"
+        run: go test -short -count=1 ./...
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -45,6 +58,24 @@ jobs:
       - uses: golangci/golangci-lint-action@v8
         with:
           version: v2.14.0
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: README.md must match README.en.md
+        run: diff -u README.en.md README.md
+      - name: Wording policy (measurement, not circumvention)
+        run: |
+          if grep -rniE "обход[а-я]* блокиров" --include='*.md' --include='*.go' --include='*.yaml' --include='*.yml' --include='*.html' --include='*.js' . ; then
+            echo "::error::Use 'network diagnostics & censorship measurement' wording (see CONTRIBUTING.md)"
+            exit 1
+          fi
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Result files are valid
+        run: go run ./cmd/prosvet-map -results results -validate
 
   cross-build:
     name: build ${{ matrix.goos }}/${{ matrix.goarch }}${{ matrix.variant }}

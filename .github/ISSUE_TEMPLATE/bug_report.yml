@@ -1,0 +1,36 @@
+name: "🐞 Bug / Ошибка"
+description: "Something does not work as expected. / Что-то работает не так."
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please **remove personal data** (IP addresses, names, exact location) from logs and reports before posting.
+        Пожалуйста, **удалите личные данные** (IP-адреса, имена, точное местоположение) из логов и отчётов.
+  - type: input
+    id: version
+    attributes:
+      label: "Version / Версия"
+      description: "Output of `prosvet version`"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: "OS / ОС"
+      options: [Windows, Linux, macOS, OpenWrt / router, Android (Termux), Other]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: "What happened? / Что произошло?"
+      description: "Command you ran, what you expected, what you got."
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: "Output / Вывод"
+      description: "Terminal output or `prosvet report -f json` (redacted)."
+      render: text

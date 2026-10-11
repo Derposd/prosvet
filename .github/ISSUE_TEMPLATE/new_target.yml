@@ -1,0 +1,40 @@
+name: "🎯 New target / Новая цель проверки"
+description: "Suggest a service or endpoint to measure. / Предложить сервис для проверки."
+labels: ["targets"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: "Service / Сервис"
+      placeholder: "e.g. Bluesky"
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: "Category / Категория"
+      options: [messengers, social, video, google, gaming, infra, protocols, media, other]
+    validations:
+      required: true
+  - type: textarea
+    id: endpoints
+    attributes:
+      label: "Endpoints / Адреса"
+      description: "Host names (web, API, CDN, media) and, if relevant, a large public file for the throttling test."
+      placeholder: |
+        bsky.app
+        public.api.bsky.app
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: "Why / Почему"
+      description: "Is it reported blocked or throttled somewhere? Add sources (news, OONI measurements). / Есть ли сообщения о блокировке? Приложите источники."
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: "Rules / Правила"
+      options:
+        - label: "This is not a proxy, VPN server or other circumvention endpoint. / Это не прокси, VPN-сервер или иной сервис для доступа к заблокированному."
+          required: true
