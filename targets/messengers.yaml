@@ -2,6 +2,7 @@ version: 1
 category: messengers
 title: { ru: "Мессенджеры", en: "Messengers" }
 default: true
+order: 10
 targets:
   - id: telegram
     name: Telegram

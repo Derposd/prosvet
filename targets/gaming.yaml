@@ -2,6 +2,7 @@ version: 1
 category: gaming
 title: { ru: "Игровые сервисы", en: "Gaming services" }
 default: true
+order: 50
 targets:
   - id: steam
     name: Steam

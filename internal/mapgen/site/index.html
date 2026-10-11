@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Prosvet — карта блокировок / censorship map</title>
+<meta name="description" content="Crowd-sourced map of internet blocking and throttling in Russia by provider and region. Network diagnostics &amp; censorship measurement.">
+<meta property="og:title" content="Prosvet — censorship map">
+<meta property="og:description" content="Where services are blocked or throttled, by provider and region. Anonymous open data.">
+<meta property="og:image" content="social-preview.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="prosvet.css">
+<link rel="stylesheet" href="map.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<div class="wrap wide">
+  <header class="top">
+    <img src="logo.svg" alt="" width="40" height="40">
+    <div>
+      <div class="brand" data-i18n="map.title">Prosvet</div>
+      <div class="tagline" data-i18n="map.subtitle"></div>
+    </div>
+    <div class="meta"><button class="btn" id="lang" type="button">EN</button></div>
+  </header>
+
+  <div class="banner warn" id="sample" hidden></div>
+
+  <section class="pills" id="stats" aria-live="polite"></section>
+
+  <section class="card filters">
+    <label><span data-i18n="map.filter_category"></span><select id="f-cat"></select></label>
+    <label><span data-i18n="map.filter_region"></span><select id="f-region"></select></label>
+    <label><span data-i18n="map.filter_conn"></span><select id="f-conn"></select></label>
+    <label class="grow"><span data-i18n="map.filter_search"></span><input id="f-search" type="search" autocomplete="off"></label>
+  </section>
+
+  <section class="legend" id="legend"></section>
+
+  <div class="heat-wrap" id="heat-wrap" hidden>
+    <table class="heat" id="heat"></table>
+  </div>
+  <div class="card muted" id="empty" hidden></div>
+
+  <dialog id="panel">
+    <form method="dialog" class="panel-head">
+      <h3 id="panel-title"></h3>
+      <button class="btn" data-i18n="map.close" value="close">×</button>
+    </form>
+    <div id="panel-cell" class="muted"></div>
+    <h4 data-i18n="map.timeline"></h4>
+    <div id="panel-chart"></div>
+    <h4 data-i18n="map.history"></h4>
+    <ul id="panel-events" class="events"></ul>
+  </dialog>
+
+  <footer>
+    <p><strong data-i18n="map.how"></strong><br><span data-i18n="map.how_text"></span></p>
+    <p><a id="repo-link" href="#" rel="noopener"><span data-i18n="map.source"></span></a> · <span data-i18n="map.privacy"></span></p>
+    <p class="muted" id="generated"></p>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 # build output
 /dist/
+/site/
 /bin/
 /prosvet
 /prosvet.exe

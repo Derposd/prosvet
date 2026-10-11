@@ -1,0 +1,68 @@
+/* Prosvet public map. Shares tokens with prosvet.css. */
+.wrap.wide { max-width: 1400px; }
+.filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; align-items: end; }
+.filters label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); min-width: 0; }
+.filters label.grow { grid-column: span 2; }
+.filters select, .filters input {
+  font: inherit; color: var(--text); background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 7px 10px; min-width: 0; width: 100%;
+}
+.legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 10px 2px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sq { width: 14px; height: 14px; border-radius: 4px; display: inline-block; background: var(--surface-2); border: 1px solid var(--border); }
+.sq.s-ok { background: var(--ok); border-color: transparent; }
+.sq.s-throttled { background: var(--throttled); border-color: transparent; }
+.sq.s-partial { background: var(--partial); border-color: transparent; }
+.sq.s-blocked { background: var(--blocked); border-color: transparent; }
+
+.heat-wrap {
+  overflow: auto; max-height: 75vh; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); -webkit-overflow-scrolling: touch;
+}
+table.heat { border-collapse: separate; border-spacing: 3px; font-size: 13px; }
+table.heat th, table.heat td { padding: 0; }
+table.heat thead th { position: sticky; top: 0; background: var(--surface); z-index: 2; }
+table.heat thead tr.cats th { top: 0; color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; text-align: left; padding: 6px 4px 2px; border-bottom: 1px solid var(--border); }
+table.heat thead tr.names th { top: 26px; height: 128px; vertical-align: bottom; }
+table.heat thead tr.names th button {
+  writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; background: none; border: 0;
+  color: var(--text); font: inherit; cursor: pointer; padding: 4px 2px; max-height: 124px; overflow: hidden; text-overflow: ellipsis;
+}
+table.heat thead tr.names th button:hover, table.heat thead tr.names th button:focus-visible { color: var(--accent); }
+table.heat th.net, table.heat td.net { position: sticky; left: 0; background: var(--surface); z-index: 1; text-align: left; padding: 2px 10px 2px 8px; white-space: nowrap; max-width: 280px; overflow: hidden; text-overflow: ellipsis; }
+table.heat thead th.net { z-index: 3; }
+table.heat td.net small { color: var(--muted); }
+table.heat td.c button {
+  display: block; width: 22px; height: 22px; border-radius: 5px; border: 1px solid var(--border);
+  background: var(--surface-2); cursor: pointer; padding: 0;
+}
+table.heat td.c.s-ok button { background: var(--ok); border-color: transparent; }
+table.heat td.c.s-throttled button { background: var(--throttled); border-color: transparent; }
+table.heat td.c.s-partial button { background: var(--partial); border-color: transparent; }
+table.heat td.c.s-blocked button { background: var(--blocked); border-color: transparent; }
+table.heat td.c.old button { opacity: .45; }
+table.heat td.c button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+dialog#panel {
+  background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius);
+  width: min(720px, calc(100vw - 32px)); max-height: calc(100vh - 32px); padding: 16px 18px;
+}
+dialog#panel::backdrop { background: rgba(0, 0, 0, .55); }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.panel-head h3 { margin: 0; }
+dialog h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin: 18px 0 6px; }
+#panel-chart svg { width: 100%; height: auto; display: block; }
+#panel-chart .axis { fill: var(--muted); font-size: 10px; }
+.events { list-style: none; padding: 0; margin: 0; font-size: 14px; }
+.events li { padding: 6px 0; border-top: 1px solid var(--border); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.events time { font-family: var(--mono); color: var(--muted); font-size: 12px; }
+.arrow { color: var(--muted); }
+#panel-chart .bar-ok { fill: var(--ok); }
+#panel-chart .bar-throttled { fill: var(--throttled); }
+#panel-chart .bar-partial { fill: var(--partial); }
+#panel-chart .bar-blocked { fill: var(--blocked); }
+@media (max-width: 640px) {
+  .filters { grid-template-columns: 1fr 1fr; }
+  .filters label.grow { grid-column: 1 / -1; }
+  table.heat td.net, table.heat th.net { max-width: 150px; }
+}

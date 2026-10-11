@@ -1,0 +1,64 @@
+name: Results from issue
+
+# Lets people submit results without git: the "Submit results" issue form is
+# validated here (with the code from main, never from the issue) and turned
+# into a pull request that a maintainer merges.
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: issue-results-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  to-pr:
+    if: contains(github.event.issue.labels.*.name, 'results')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Extract and validate the submission
+        id: extract
+        env:
+          BODY: ${{ github.event.issue.body }} # untrusted: only ever passed through an env var
+        run: |
+          printf '%s' "$BODY" > "$RUNNER_TEMP/body.md"
+          path=$(go run ./cmd/prosvet-map -results results -issue "$RUNNER_TEMP/body.md")
+          echo "path=$path" >> "$GITHUB_OUTPUT"
+      - name: Open a pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          FILE: ${{ steps.extract.outputs.path }}
+        run: |
+          branch="results/issue-${ISSUE}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add "$FILE"
+          git commit -m "results: add submission from #${ISSUE}"
+          git push --force origin "$branch"
+          if ! gh pr view "$branch" >/dev/null 2>&1; then
+            gh pr create --base main --head "$branch" \
+              --title "results: submission from #${ISSUE}" \
+              --body "Created automatically from #${ISSUE}. The file passed validation (format, value ranges, no IP addresses). Closes #${ISSUE}."
+          fi
+          gh issue comment "$ISSUE" --body "✅ Thank you! The file is valid; a pull request was opened and will appear on the map after merge. / Спасибо! Файл корректен, открыт pull request — данные появятся на карте после слияния."
+      - name: Explain the failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$ISSUE" --body "❌ The submission could not be processed: the JSON is missing or did not pass validation. Please paste the file produced by \`prosvet submit\` without changes. / Не удалось обработать отправку: JSON отсутствует или не прошёл проверку. Вставьте файл, созданный \`prosvet submit\`, без изменений."

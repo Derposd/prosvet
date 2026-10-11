@@ -6,6 +6,7 @@ version: 1
 category: infra
 title: { ru: "CDN и хостинги", en: "CDN & hosting" }
 default: true
+order: 60
 targets:
   - id: cloudflare
     name: Cloudflare

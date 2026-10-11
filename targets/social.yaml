@@ -2,6 +2,7 @@ version: 1
 category: social
 title: { ru: "Соцсети", en: "Social networks" }
 default: true
+order: 20
 targets:
   - id: instagram
     name: Instagram

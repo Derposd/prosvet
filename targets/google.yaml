@@ -2,6 +2,7 @@ version: 1
 category: google
 title: { ru: "Сервисы Google", en: "Google services" }
 default: true
+order: 40
 targets:
   - id: google-search
     name: Google Search

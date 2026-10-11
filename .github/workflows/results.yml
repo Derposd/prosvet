@@ -1,0 +1,47 @@
+name: Results
+
+# Checks pull requests that add measurement results: only new files under
+# results/, each one valid and anonymous (no IP addresses, known fields only).
+
+on:
+  pull_request:
+    paths:
+      - "results/**"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Only additions under results/
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          range="origin/${BASE}...HEAD"
+          outside=$(git diff --name-only "$range" | grep -v '^results/' || true)
+          if [ -n "$outside" ]; then
+            echo "::error::Pull requests with results must only add files under results/. Other changed files:"
+            echo "$outside"
+            exit 1
+          fi
+          changed=$(git diff --name-only --diff-filter=DMR "$range" -- results/ | grep -v '^results/README.md$' || true)
+          if [ -n "$changed" ]; then
+            echo "::error::Existing result files must not be modified or deleted:"
+            echo "$changed"
+            exit 1
+          fi
+          git diff --name-only --diff-filter=A "$range" -- 'results/*.json' 'results/**/*.json' > "$RUNNER_TEMP/added.txt"
+          echo "Added files:"; cat "$RUNNER_TEMP/added.txt"
+      - name: Validate added files
+        run: |
+          if [ -s "$RUNNER_TEMP/added.txt" ]; then
+            xargs go run ./cmd/prosvet-map -results results -validate < "$RUNNER_TEMP/added.txt"
+          fi

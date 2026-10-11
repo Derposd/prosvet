@@ -5,6 +5,7 @@ version: 1
 category: media
 title: { ru: "СМИ и справочные ресурсы", en: "Media & reference" }
 default: false
+order: 90
 consent:
   ru: "Провайдер может увидеть, что вы проверяли доступность этих сайтов. Продолжить?"
   en: "Your ISP may see that you checked these sites. Continue?"

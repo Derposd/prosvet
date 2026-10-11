@@ -1,0 +1,28 @@
+name: "📊 Submit results / Отправить результаты"
+description: "Add your anonymous measurement to the public map. / Добавить анонимное измерение на публичную карту."
+title: "results: "
+labels: ["results"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **RU.** Запустите `prosvet scan`, затем `prosvet submit` — команда покажет и сохранит файл `results/AS<номер>/<дата>-<id>.json`. Вставьте его содержимое ниже **без изменений**. В файле нет IP-адреса, имени устройства и сырых данных — только ASN, провайдер, регион (субъект РФ), тип подключения и вердикты по сервисам. После проверки бот откроет pull request.
+
+        **EN.** Run `prosvet scan`, then `prosvet submit` — it shows and saves `results/AS<number>/<date>-<id>.json`. Paste its content below **unchanged**. The file contains no IP address, device name or raw data — only ASN, provider, region, connection type and per-service verdicts. After validation a bot opens a pull request.
+  - type: textarea
+    id: json
+    attributes:
+      label: "Result file / Файл результатов (JSON)"
+      description: "Content of the file created by `prosvet submit`."
+      render: json
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: "Confirmation / Подтверждение"
+      options:
+        - label: "I measured without a VPN or proxy. / Я проводил(а) измерение без VPN и прокси."
+          required: true
+        - label: "I agree that this data is published under CC0 1.0 (public domain). / Я согласен(на) с публикацией данных под CC0 1.0."
+          required: true

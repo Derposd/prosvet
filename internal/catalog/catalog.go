@@ -173,6 +173,7 @@ type Category struct {
 	ID      string   `yaml:"category"`
 	Title   Text     `yaml:"title"`
 	Default bool     `yaml:"default"`
+	Order   int      `yaml:"order"`
 	Consent Text     `yaml:"consent"`
 	Refs    []string `yaml:"refs"`
 	Targets []Target `yaml:"targets"`
@@ -366,6 +367,13 @@ func parse(data map[string][]byte) (*Catalog, error) {
 			return nil, fmt.Errorf("%s: unknown kind %q", name, h.Kind)
 		}
 	}
+	sort.SliceStable(c.Categories, func(i, j int) bool {
+		a, b := c.Categories[i], c.Categories[j]
+		if a.Order != b.Order {
+			return a.Order < b.Order
+		}
+		return a.ID < b.ID
+	})
 	if err := c.Validate(); err != nil {
 		return nil, err
 	}

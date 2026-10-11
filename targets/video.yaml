@@ -2,6 +2,7 @@ version: 1
 category: video
 title: { ru: "Видео и стриминг", en: "Video & streaming" }
 default: true
+order: 30
 targets:
   - id: youtube
     name: YouTube

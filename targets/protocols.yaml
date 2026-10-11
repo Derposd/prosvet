@@ -5,6 +5,7 @@ version: 1
 category: protocols
 title: { ru: "Протоколы", en: "Protocols" }
 default: true
+order: 70
 targets:
   - id: quic-cloudflare
     name: QUIC — Cloudflare

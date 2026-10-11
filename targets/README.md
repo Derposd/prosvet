@@ -9,6 +9,7 @@ version: 1
 category: messengers            # unique category id (used by --category)
 title: { ru: "Мессенджеры", en: "Messengers" }
 default: true                   # included in a plain `prosvet scan`; false = opt-in
+order: 10                       # display order of categories (lower first)
 targets:
   - id: telegram                # unique id (used by --target)
     name: Telegram
