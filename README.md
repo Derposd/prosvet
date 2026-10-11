@@ -41,7 +41,7 @@ service and tells you, in plain language, which method is used, how sure it is a
 ## Quick start
 
 ```bash
-# 1. download the binary for your OS from Releases (or: scoop / brew / winget / docker, see below)
+# 1. download the binary for your OS: https://github.com/Derposd/prosvet/releases/latest
 # 2. run the interactive TUI
 prosvet
 # 3. or a one-shot scan with a report
@@ -130,14 +130,13 @@ For each endpoint of each service:
 
 | Method | Command |
 |---|---|
-| Binary | download from [Releases](https://github.com/Derposd/prosvet/releases), verify `checksums.txt`, run |
-| Scoop (Windows) | `scoop bucket add prosvet https://github.com/Derposd/scoop-bucket && scoop install prosvet` |
-| winget (Windows) | `winget install Prosvet.prosvet` |
-| Homebrew (macOS/Linux) | `brew install --cask Derposd/tap/prosvet` |
+| Binary | download from [the latest release](https://github.com/Derposd/prosvet/releases/latest), verify `checksums.txt`, run |
 | Docker | `docker run --rm -it --network host ghcr.io/derposd/prosvet` |
 | Debian/Ubuntu, Fedora, Alpine | `.deb`, `.rpm`, `.apk` packages on the Releases page |
 | Go | `go install github.com/Derposd/prosvet/cmd/prosvet@latest` |
 | OpenWrt router | copy `prosvet_*_linux_mipsle_softfloat` (or `mips_softfloat`, `armv7`, `arm64`) to `/tmp`, `chmod +x`, run `./prosvet scan --yes` |
+
+Scoop, winget and Homebrew packages are planned (see the [roadmap](ROADMAP.md)).
 
 ## Commands
 

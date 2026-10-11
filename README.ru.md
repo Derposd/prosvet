@@ -41,7 +41,7 @@
 ## Быстрый старт
 
 ```bash
-# 1. скачайте бинарник для своей ОС со страницы Releases (или scoop / brew / winget / docker — см. ниже)
+# 1. скачайте бинарник для своей ОС: https://github.com/Derposd/prosvet/releases/latest
 # 2. запустите интерактивный TUI
 prosvet
 # 3. или разовую проверку с отчётом
@@ -130,14 +130,13 @@ DNS
 
 | Способ | Команда |
 |---|---|
-| Бинарник | скачать со страницы [Releases](https://github.com/Derposd/prosvet/releases), сверить `checksums.txt`, запустить |
-| Scoop (Windows) | `scoop bucket add prosvet https://github.com/Derposd/scoop-bucket && scoop install prosvet` |
-| winget (Windows) | `winget install Prosvet.prosvet` |
-| Homebrew (macOS/Linux) | `brew install --cask Derposd/tap/prosvet` |
+| Бинарник | скачать из [последнего релиза](https://github.com/Derposd/prosvet/releases/latest), сверить `checksums.txt`, запустить |
 | Docker | `docker run --rm -it --network host ghcr.io/derposd/prosvet` |
 | Debian/Ubuntu, Fedora, Alpine | пакеты `.deb`, `.rpm`, `.apk` на странице Releases |
 | Go | `go install github.com/Derposd/prosvet/cmd/prosvet@latest` |
 | Роутер OpenWrt | скопировать `prosvet_*_linux_mipsle_softfloat` (или `mips_softfloat`, `armv7`, `arm64`) в `/tmp`, `chmod +x`, запустить `./prosvet scan --yes` |
+
+Пакеты для Scoop, winget и Homebrew — в планах (см. [дорожную карту](ROADMAP.md)).
 
 ## Команды
 

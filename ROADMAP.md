@@ -11,10 +11,11 @@ network is censored — and open data about it. Items move as research and contr
 - Classifier with confidence and evidence; whitelist-mode check; 3× repetitions with majority voting
 - TUI, CLI, local dashboard, Markdown/HTML/JSON reports, RU/EN
 - Anonymous submissions, public heatmap on GitHub Pages, issue-to-PR flow
-- Releases for Windows/Linux/macOS/FreeBSD/OpenWrt, Scoop, Homebrew, winget, Docker, deb/rpm/apk
+- Releases for Windows/Linux/macOS/FreeBSD/OpenWrt, Docker, deb/rpm/apk
 
 ## v0.2 — accuracy
 
+- [ ] Scoop bucket, winget manifest and Homebrew cask (configured in `.goreleaser.yaml`, enabled once the `PACKAGES_TOKEN` secret exists)
 - [ ] Validate thresholds of the 16–20 KB freeze per operator with submitted `stall_kb` data
 - [ ] IPv6 measurements alongside IPv4
 - [ ] Packet-level freeze detection (count of packets, not only bytes) where the OS allows it
