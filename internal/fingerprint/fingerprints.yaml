@@ -1,0 +1,47 @@
+# Known block-page and DNS-stub fingerprints.
+#
+# These are factual indicators (redirect hosts, stub IP addresses, characteristic
+# phrases) observed on Russian networks. Many of them were first documented by
+# the OONI project (https://github.com/ooni/blocking-fingerprints); this file is
+# maintained independently. Add new fingerprints via PR together with evidence
+# (a report or an OONI measurement link).
+#
+# match: prefix | contains | exact
+version: 1
+
+dns:
+  - { id: ru.rostelecom.1, ip: 95.167.13.50, isp: Rostelecom }
+  - { id: ru.rostelecom.2, ip: 95.167.13.51, isp: Rostelecom }
+  - { id: ru.rostelecom.3, ip: 217.148.54.171, isp: Rostelecom }
+  - { id: ru.ertelecom.1, ip: 5.3.3.17, isp: ER-Telecom }
+  - { id: ru.ertelecom.2, ip: 188.186.146.207, isp: ER-Telecom }
+  - { id: ru.ertelecom.3, ip: 188.186.146.208, isp: ER-Telecom }
+  - { id: ru.ertelecom.4, ip: 188.186.154.79, isp: ER-Telecom }
+  - { id: ru.ertelecom.5, ip: 188.186.154.88, isp: ER-Telecom }
+  - { id: ru.national.1, ip: 62.33.207.196 }
+  - { id: ru.national.2, ip: 62.33.207.197 }
+  - { id: ru.netbynet, ip: 212.1.226.59, isp: NetByNet }
+  - { id: ru.skynet, ip: 185.37.129.10, isp: SkyNet }
+  - { id: ru.enforta, ip: 87.241.223.133, isp: Enforta }
+  - { id: ru.macomnet, ip: 195.128.72.3, isp: Macomnet }
+  - { id: ru.sevensky, ip: 81.200.2.238, isp: Seven Sky }
+
+http:
+  - { id: ru.rkn.vk-blank, where: location, match: prefix, pattern: "https://vk.com/blank.php?rkn=" }
+  - { id: ru.rostelecom.warning, where: location, match: prefix, pattern: "http://warning.rt.ru" }
+  - { id: ru.rostelecom.block, where: location, match: prefix, pattern: "http://block.rt.ru" }
+  - { id: ru.mgts.blocked, where: location, match: contains, pattern: "blocked.mgts.ru" }
+  - { id: ru.mgts.block, where: location, match: contains, pattern: "block.mgts.ru" }
+  - { id: ru.tele2.location, where: location, match: prefix, pattern: "http://t2blocked.com" }
+  - { id: ru.tele2.body, where: body, match: contains, pattern: "//t2rkn.com/" }
+  - { id: ru.ttk.location, where: location, match: prefix, pattern: "http://fz139.ttk.ru" }
+  - { id: ru.mts.body, where: body, match: contains, pattern: "subblock.mts.ru" }
+  - { id: ru.netbynet.location, where: location, match: prefix, pattern: "http://blocked.netbynet.ru" }
+  - { id: ru.akado.location, where: location, match: prefix, pattern: "http://blocked.akado.ru" }
+  - { id: ru.westcall.location, where: location, match: prefix, pattern: "http://zapret.westcall.net" }
+  - { id: ru.beeline.body, where: body, match: contains, pattern: "beeline.ru/customers/help/safe-beeline" }
+  - { id: ru.rkn.eais, where: body, match: contains, pattern: "eais.rkn.gov.ru" }
+  - { id: ru.generic.law, where: body, match: contains, pattern: "Доступ к сайту ограничен в соответствии с Федеральными законами" }
+  - { id: ru.generic.closed, where: body, match: contains, pattern: "Доступ к запрашиваемому ресурсу закрыт" }
+  - { id: ru.generic.registry, where: body, match: contains, pattern: "ЕДИНЫЙ РЕЕСТР" }
+  - { id: ru.generic.restricted, where: body, match: contains, pattern: "Доступ к запрашиваемому Вами Интернет-ресурсу ограничен" }

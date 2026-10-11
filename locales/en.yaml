@@ -1,0 +1,250 @@
+# English strings. Placeholders look like {name}. Keep keys in sync with ru.yaml
+# (a unit test enforces it).
+
+app:
+  tagline: "network diagnostics & censorship measurement"
+  demo_banner: "DEMO — simulated network, not real measurements"
+
+status:
+  ok: "Works"
+  throttled: "Throttled"
+  partial: "Partially blocked"
+  blocked: "Blocked"
+  unreachable: "No connectivity"
+  unknown: "Unknown"
+
+conf:
+  high: "high confidence"
+  medium: "medium confidence"
+  low: "low confidence"
+
+conn:
+  mobile: "mobile"
+  fixed: "fixed line"
+  unknown: "unknown connection type"
+
+kind:
+  ok:
+    title: "No interference detected"
+    explain: "Every check passed: the name resolves correctly, the connection opens and data flows normally."
+  no_connectivity:
+    title: "No connectivity"
+    explain: "Even control sites did not respond. Either the internet is down (for example, a mobile shutdown) or the device is offline. Individual services cannot be judged right now."
+  tls_mitm:
+    title: "TLS interception (MITM)"
+    explain: "The site presented a certificate that its owner could not have issued: it chains to an unexpected authority. Someone on the path may be able to read or alter the traffic. Do not enter passwords on this connection."
+  blockpage:
+    title: "ISP block page"
+    explain: "Instead of the site, the provider returned its own page or redirect saying access is restricted."
+  dns:
+    title: "DNS tampering"
+    explain: "Your resolver gives a wrong answer for this name (no such domain, a stub address or a non-public address), while independent encrypted resolvers return the real address."
+  sni_dpi:
+    title: "DPI blocking by server name (SNI)"
+    explain: "The connection opens, but it is cut when the site name is sent in the TLS handshake. The same server answers when a different or no name is sent, so the filter reacts to the name, not to the address."
+  ip_block:
+    title: "Blocked by IP address"
+    explain: "The server's address does not accept connections from your network at all, while other sites work."
+  tls_reset:
+    title: "TLS connection reset"
+    explain: "The connection is torn down during the TLS handshake regardless of the server name. Filtering happens by address and port or by protocol signature."
+  throttle_freeze:
+    title: "Throttling: transfer freezes"
+    explain: "The connection works, but data stops arriving after the first few kilobytes and the download hangs. This matches the \"16–20 KB\" pattern used against foreign hosting and CDN providers."
+  throttle_rate:
+    title: "Throttling: low speed"
+    explain: "Data arrives, but far slower than from domestic servers on the same connection."
+  quic_sni:
+    title: "QUIC/HTTP3 filtered by server name"
+    explain: "QUIC packets carrying this site's name get no answer, while QUIC with another name works. Browsers usually fall back to regular HTTPS, which may be slower."
+  quic_blocked:
+    title: "QUIC/HTTP3 unavailable"
+    explain: "No QUIC handshake succeeds although regular HTTPS works. UDP traffic is likely filtered."
+  ech_blocked:
+    title: "Encrypted Client Hello blocked"
+    explain: "A handshake that hides the site name with ECH fails, while a normal one succeeds."
+  timeout:
+    title: "Timeout"
+    explain: "The service did not answer in time and no clear blocking signature was found. It may be a server problem or unreliable filtering."
+  unknown:
+    title: "Not enough data"
+    explain: "The checks did not produce a conclusive result."
+
+subtype:
+  drop: "packets dropped silently"
+  reject: "connection rejected"
+  unreachable: "network unreachable"
+  reset: "TCP RST injected"
+  eof: "connection closed"
+  nsdi_removed: "removed from the national DNS (NSDI)"
+  nxdomain: "resolver says the domain does not exist"
+  stub: "stub address returned"
+  bogon: "non-public address returned"
+  failure: "resolver fails for this name"
+  substituted: "address substituted"
+  "16-20kb": "freeze after ~16–20 KB"
+  stall: "transfer stalls"
+  midstream: "connection killed mid-transfer"
+  handshake: "handshake never completes"
+  http: "no HTTP response"
+  state_ca: "certificate from the Russian state CA"
+  untrusted_ca: "certificate from an untrusted CA"
+  foreign_cert: "certificate for a different site"
+  v1: "QUIC v1"
+  v2: "QUIC v2"
+
+ev:
+  runs: "Seen in {agree} of {runs} attempts."
+  endpoints: "{affected} of {total} checked endpoints are affected."
+  no_connectivity: "Control sites are unreachable too."
+  connect:
+    ref_ok: "Another address of this service (from an independent resolver) is reachable, so only some addresses are blocked."
+    failed: "TCP connection to {addr} failed: {outcome}."
+  tls:
+    real_failed: "TLS handshake with the real server name failed: {outcome}."
+    variant_ok: "The same server answered a handshake with SNI variant \"{variant}\"."
+    all_variants_failed: "Handshakes with other server names failed as well ({outcome})."
+    alert: "The server rejected the TLS handshake with an alert."
+  cert:
+    domestic_ca: "Certificate from the Russian state CA on a domestic site (expected; browsers outside Russia do not trust it): {issuer}."
+    russian_ca: "Certificate issued by \"{issuer}\" — the Russian state CA is not trusted by browsers and must not appear on a foreign site."
+    untrusted: "Certificate for the right name, issued by an authority your system does not trust: {issuer}. Some services use their own private CA; on others this can mean interception."
+    wrong_host: "Certificate belongs to \"{subject}\" (issuer {issuer}), not to this site."
+  http:
+    blockpage: "Response matches the known block page \"{fp}\"."
+    freeze: "Transfer froze after {bytes} KB received."
+    rate: "Measured {kbps} kbit/s versus {baseline} kbit/s from a domestic server."
+    midstream: "Connection was cut after {bytes} bytes."
+    no_response: "TLS works, but the HTTP request gets no answer."
+  dns:
+    nxdomain: "System resolver: domain does not exist (NXDOMAIN)."
+    nsdi_nx: "The national DNS (NSDI) also returns NXDOMAIN — the record was removed centrally."
+    stub: "System resolver returned a known stub address ({addrs}, fingerprint {fp})."
+    bogon: "System resolver returned a non-public address: {addrs}."
+    failure: "System resolver fails for this name: {outcome}."
+    substituted: "System resolver returned {addrs}, which does not serve this site."
+    reference_ok: "Independent resolver {resolver} returns {addrs}."
+    reference_reachable: "The real address is reachable — only DNS is tampered with."
+    also_blocked_ip: "The real address is blocked as well ({kind})."
+    unresolvable: "The name could not be resolved by any resolver."
+  quic:
+    real_timeout: "QUIC v{version} with the real server name gets no answer."
+    random_ok: "QUIC v{version} with a random server name gets an answer."
+    all_timeout: "No QUIC v{version} handshake gets an answer."
+    v2_ok: "QUIC v2 works — the filter only parses QUIC v1."
+  ech:
+    failed: "Handshake with Encrypted Client Hello failed: {outcome}."
+
+whitelist:
+  title: "Whitelist mode check"
+  active:
+    title: "Whitelist mode is ACTIVE"
+    explain: "Domestic services open, but foreign sites of all kinds do not. Your connection only lets through an approved list of resources (the \"whitelist\" regime used during mobile internet restrictions)."
+  normal:
+    title: "No whitelist mode"
+    explain: "Both domestic and foreign control sites are reachable."
+  no_connectivity:
+    title: "No connectivity"
+    explain: "Neither domestic nor foreign sites respond. This looks like a full shutdown or an outage, not a whitelist."
+  degraded:
+    title: "Degraded connectivity"
+    explain: "Some domestic or foreign sites fail, but the pattern does not match a whitelist. Specific services may be blocked, or the network is unstable."
+  level:
+    dns: "foreign names do not resolve"
+    connect: "foreign addresses are cut at the IP level"
+    handshake: "foreign connections are cut by DPI during the TLS handshake"
+    mixed: "failures happen at different stages"
+  counts: "Domestic: {dok} of {dtotal} reachable · Foreign: {fok} of {ftotal} reachable"
+  domestic: "Domestic services"
+  foreign: "Foreign control sites"
+
+dns:
+  title: "DNS"
+  finding:
+    dns_interception: "DNS queries to public resolvers are intercepted on the path (answers do not come from {resolvers})."
+    doh_blocked: "DNS-over-HTTPS is blocked for: {resolvers}."
+    dot_blocked: "DNS-over-TLS is blocked for: {resolvers}."
+    udp_blocked: "Plain DNS (UDP/53) is blocked for: {resolvers}."
+    system_resolver_tampering: "Your system resolver tampers with: {domains}."
+  none: "No DNS anomalies found."
+
+network:
+  title: "Network"
+  isp: "Provider"
+  region: "Region"
+  conn: "Connection"
+  vpn_warning: "A VPN or proxy seems to be active ({reason}). Results describe the VPN exit, not your provider. Disable it for an accurate measurement."
+  proxy_ignored: "Proxy settings from the environment are ignored: Prosvet measures your direct connection."
+  unknown: "unknown"
+
+report:
+  problems: "What is wrong"
+  endpoints: "Checked endpoints"
+  evidence: "Evidence"
+  secondary: "Also detected"
+  generated: "Generated by Prosvet {version} on {date}"
+  summary: "Summary"
+  title: "Prosvet report"
+  about: "What does this mean?"
+  learn_more: "Learn more"
+  category: "Category"
+  service: "Service"
+  status: "Status"
+  method: "Method"
+  confidence: "Confidence"
+  privacy_note: "This report contains no IP address and no device identifiers. Share it as you see fit."
+
+cli:
+  short: "Network diagnostics & censorship measurement"
+  long: "Prosvet checks which services are blocked or throttled on your network and explains how: DNS tampering, IP blocking, DPI by SNI, TLS resets, throttling, QUIC filtering and whitelist mode. Nothing is sent anywhere unless you run `prosvet submit`."
+  consent: "Prosvet will connect to the listed services to check their availability. Your provider can see these connections. No data is sent to the Prosvet authors. Continue? [y/N] "
+  consent_media: "Category \"{category}\": {text} [y/N] "
+  aborted: "Aborted."
+  scanning: "Targets to check: {total}"
+  phase:
+    precheck: "Checking basic connectivity…"
+    baseline: "Measuring domestic reference speed…"
+    targets: "Testing services…"
+    dns: "Comparing DNS resolvers…"
+    whitelist: "Checking domestic and foreign control sites…"
+  summary: "{ok} work · {throttled} throttled · {partial} partial · {blocked} blocked"
+  saved: "Report saved: {path}"
+  details_hint: "Details: prosvet report --format html -o report.html"
+  baseline: "Domestic reference speed: {kbps} kbit/s"
+  expect: "known from public sources: {expect}"
+  no_report: "No saved report found. Run `prosvet scan` first."
+  submit_written: "Anonymous result file written: {path}"
+  submit_next: "Send it via a pull request or attach it to an issue: {url}"
+  submit_preview: "This is exactly what will be shared (no IP address, no device data):"
+  targets_header: "Available targets"
+  demo_note: "This is a demonstration on a simulated censored network running on your computer."
+  flag:
+    lang: "interface language (ru, en); default: auto-detect"
+    no_color: "disable colours"
+    targets_dir: "directory with your own targets/*.yaml (overrides files of the same name)"
+    yes: "do not ask for confirmation"
+    verbose: "print evidence for every target"
+    target: "check only these targets (id, repeatable or comma-separated)"
+    category: "check only these categories (repeatable or comma-separated)"
+    all: "include opt-in categories (e.g. media)"
+    repeats: "attempts per test; the result is decided by majority"
+    concurrency: "parallel connections"
+    timeout_scale: "multiply all timeouts (use 2 on very slow networks)"
+    no_quic: "skip QUIC/HTTP3 probes"
+    no_dns: "skip the DNS resolver comparison"
+    offline_netinfo: "do not look up ASN/provider/region online"
+    asn: "set your ASN manually"
+    region: "set your region manually (ISO 3166-2, e.g. RU-MOW)"
+    conn: "set connection type manually (mobile or fixed)"
+    format: "output format: terminal, json, md, html"
+    output: "write the report to this file instead of stdout"
+    input: "read this report file instead of the last saved one"
+  cmd:
+    scan: "Check targets for blocking and throttling"
+    whitelist: "Check whether only allow-listed (domestic) services are reachable"
+    targets: "List available targets and categories"
+    version: "Print version information"
+    report: "Render the last report as terminal, JSON, Markdown or HTML"
+    submit: "Prepare an anonymous result file for the public map"
+    serve: "Open a local web dashboard on 127.0.0.1"
+    demo: "Run a demonstration against a simulated censored network"
