@@ -3,7 +3,7 @@ package classify
 import (
 	"strconv"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // Target aggregates endpoint verdicts into a target status and verdict.

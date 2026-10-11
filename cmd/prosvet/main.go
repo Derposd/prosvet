@@ -4,7 +4,7 @@ package main
 import (
 	"os"
 
-	"github.com/ordinarysim/prosvet/internal/cli"
+	"github.com/Derposd/prosvet/internal/cli"
 )
 
 // Set by the linker (see .goreleaser.yaml).

@@ -1,4 +1,4 @@
-module github.com/ordinarysim/prosvet
+module github.com/Derposd/prosvet
 
 go 1.26.0
 

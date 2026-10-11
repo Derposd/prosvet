@@ -7,7 +7,7 @@ import (
 	"testing"
 	"testing/fstest"
 
-	"github.com/ordinarysim/prosvet/targets"
+	"github.com/Derposd/prosvet/targets"
 )
 
 func TestEmbeddedCatalogIsValid(t *testing.T) {

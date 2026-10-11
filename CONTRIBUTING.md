@@ -28,7 +28,7 @@ with reality, so every contribution counts. *Русская версия — н�
 ## Development
 
 ```bash
-git clone https://github.com/ordinarysim/prosvet && cd prosvet
+git clone https://github.com/Derposd/prosvet && cd prosvet
 go test ./...            # unit + integration tests (simulated censored network on localhost)
 go test -short ./...     # skip the slower integration tests
 golangci-lint run ./...  # v2, config in .golangci.yml

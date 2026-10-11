@@ -4,7 +4,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // DNSFindings derives conclusions from the resolver matrix and interception probes.

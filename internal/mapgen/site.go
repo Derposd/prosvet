@@ -14,11 +14,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/brand"
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/i18n"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/submit"
+	"github.com/Derposd/prosvet/internal/brand"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/i18n"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/submit"
 )
 
 //go:embed site/*

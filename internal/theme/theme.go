@@ -5,7 +5,7 @@ package theme
 import (
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // Hex colours (dark-first palette; light variants for light terminals).

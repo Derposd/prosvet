@@ -5,8 +5,8 @@ import (
 	"html/template"
 	"io"
 
-	"github.com/ordinarysim/prosvet/internal/brand"
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/brand"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 //go:embed report.html.tmpl

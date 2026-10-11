@@ -15,9 +15,9 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/i18n"
-	"github.com/ordinarysim/prosvet/targets"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/i18n"
+	"github.com/Derposd/prosvet/targets"
 )
 
 // BuildInfo is injected at link time.

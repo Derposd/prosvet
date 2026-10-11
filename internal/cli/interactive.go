@@ -13,15 +13,15 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/demo"
-	"github.com/ordinarysim/prosvet/internal/engine"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/report"
-	"github.com/ordinarysim/prosvet/internal/serve"
-	"github.com/ordinarysim/prosvet/internal/submit"
-	"github.com/ordinarysim/prosvet/internal/theme"
-	"github.com/ordinarysim/prosvet/internal/tui"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/demo"
+	"github.com/Derposd/prosvet/internal/engine"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/report"
+	"github.com/Derposd/prosvet/internal/serve"
+	"github.com/Derposd/prosvet/internal/submit"
+	"github.com/Derposd/prosvet/internal/theme"
+	"github.com/Derposd/prosvet/internal/tui"
 )
 
 func (a *app) consentMarker() string {

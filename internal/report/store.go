@@ -10,7 +10,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // ErrNoReport is returned when no report has been saved yet.

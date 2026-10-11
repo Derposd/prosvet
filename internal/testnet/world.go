@@ -10,9 +10,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/fingerprint"
-	"github.com/ordinarysim/prosvet/internal/probe"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/fingerprint"
+	"github.com/Derposd/prosvet/internal/probe"
 )
 
 // Host describes one simulated service and how the censor treats it.

@@ -95,7 +95,7 @@ changelog:
 nfpms:
   - id: packages
     package_name: prosvet
-    homepage: https://github.com/ordinarysim/prosvet
+    homepage: https://github.com/Derposd/prosvet
     maintainer: Prosvet contributors <noreply@github.com>
     description: Network diagnostics & censorship measurement tool.
     license: MIT
@@ -108,7 +108,7 @@ nfpms:
 
 dockers_v2:
   - images:
-      - ghcr.io/ordinarysim/prosvet
+      - ghcr.io/derposd/prosvet
     tags:
       - "v{{ .Version }}"
       - "{{ if not .Prerelease }}latest{{ end }}"
@@ -119,17 +119,17 @@ dockers_v2:
     labels:
       org.opencontainers.image.title: "{{ .ProjectName }}"
       org.opencontainers.image.description: "Network diagnostics & censorship measurement"
-      org.opencontainers.image.source: "https://github.com/ordinarysim/prosvet"
+      org.opencontainers.image.source: "https://github.com/Derposd/prosvet"
       org.opencontainers.image.version: "{{ .Version }}"
       org.opencontainers.image.licenses: MIT
 
 homebrew_casks:
   - name: prosvet
     binaries: [prosvet]
-    homepage: https://github.com/ordinarysim/prosvet
+    homepage: https://github.com/Derposd/prosvet
     description: Network diagnostics & censorship measurement
     repository:
-      owner: ordinarysim
+      owner: Derposd
       name: homebrew-tap
       token: "{{ .Env.PACKAGES_TOKEN }}"
     commit_author:
@@ -145,24 +145,24 @@ homebrew_casks:
 scoops:
   - name: prosvet
     repository:
-      owner: ordinarysim
+      owner: Derposd
       name: scoop-bucket
       token: "{{ .Env.PACKAGES_TOKEN }}"
-    homepage: https://github.com/ordinarysim/prosvet
+    homepage: https://github.com/Derposd/prosvet
     description: Network diagnostics & censorship measurement
     license: MIT
 
 winget:
   - name: prosvet
     publisher: Prosvet
-    publisher_url: https://github.com/ordinarysim/prosvet
+    publisher_url: https://github.com/Derposd/prosvet
     short_description: Network diagnostics & censorship measurement
     description: Checks which services are blocked or throttled on your network and explains how (DNS, IP, SNI, TLS, QUIC, throttling, whitelist mode).
     license: MIT
-    homepage: https://github.com/ordinarysim/prosvet
+    homepage: https://github.com/Derposd/prosvet
     tags: [network, diagnostics, censorship, dns, tls, cli]
     repository:
-      owner: ordinarysim
+      owner: Derposd
       name: winget-pkgs
       branch: "prosvet-{{ .Version }}"
       token: "{{ .Env.PACKAGES_TOKEN }}"
@@ -176,7 +176,7 @@ winget:
 
 release:
   github:
-    owner: ordinarysim
+    owner: Derposd
     name: prosvet
   draft: true
   footer: |

@@ -16,7 +16,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // Options configure detection. Manual values override automatic ones.

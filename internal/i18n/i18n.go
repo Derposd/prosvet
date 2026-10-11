@@ -11,8 +11,8 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/locales"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/locales"
 )
 
 // Fallback is the language used for missing keys.

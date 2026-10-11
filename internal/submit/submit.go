@@ -18,8 +18,8 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/brand"
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/brand"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // Schema identifies the submission format.

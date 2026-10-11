@@ -10,12 +10,12 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/engine"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/netinfo"
-	"github.com/ordinarysim/prosvet/internal/probe"
-	"github.com/ordinarysim/prosvet/internal/report"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/engine"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/netinfo"
+	"github.com/Derposd/prosvet/internal/probe"
+	"github.com/Derposd/prosvet/internal/report"
 )
 
 type scanFlags struct {

@@ -7,10 +7,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/i18n"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/report"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/i18n"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/report"
 )
 
 func TestDemoShowsEveryMajorVerdict(t *testing.T) {

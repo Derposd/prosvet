@@ -11,11 +11,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/engine"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/report"
-	"github.com/ordinarysim/prosvet/internal/theme"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/engine"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/report"
+	"github.com/Derposd/prosvet/internal/theme"
 )
 
 func (a *app) whitelistCmd() *cobra.Command {

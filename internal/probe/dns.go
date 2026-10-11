@@ -16,9 +16,9 @@ import (
 
 	"github.com/miekg/dns"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/errclass"
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/errclass"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // DNS transports.

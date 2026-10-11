@@ -5,9 +5,9 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/ordinarysim/prosvet/internal/i18n"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/netinfo"
+	"github.com/Derposd/prosvet/internal/i18n"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/netinfo"
 )
 
 // View is a renderer-independent, localised projection of a report. All

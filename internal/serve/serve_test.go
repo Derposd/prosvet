@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/demo"
-	"github.com/ordinarysim/prosvet/internal/engine"
-	"github.com/ordinarysim/prosvet/internal/i18n"
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/demo"
+	"github.com/Derposd/prosvet/internal/engine"
+	"github.com/Derposd/prosvet/internal/i18n"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 func newTestServer(t *testing.T) (*Server, *httptest.Server, *demo.Env) {

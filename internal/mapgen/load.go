@@ -14,7 +14,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ordinarysim/prosvet/internal/submit"
+	"github.com/Derposd/prosvet/internal/submit"
 )
 
 // Entry is one valid submission together with its repository path.

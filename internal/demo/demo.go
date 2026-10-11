@@ -4,11 +4,11 @@
 package demo
 
 import (
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/engine"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/probe"
-	"github.com/ordinarysim/prosvet/internal/testnet"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/engine"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/probe"
+	"github.com/Derposd/prosvet/internal/testnet"
 )
 
 // Network describes the fake provider shown in demo reports (ASN from the

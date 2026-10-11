@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/netinfo"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/netinfo"
 )
 
 // Data is the JSON consumed by the map front-end.

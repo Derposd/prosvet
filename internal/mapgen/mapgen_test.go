@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/submit"
-	"github.com/ordinarysim/prosvet/targets"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/submit"
+	"github.com/Derposd/prosvet/targets"
 )
 
 func sub(date string, asn int, region, conn string, results ...submit.Result) *submit.Submission {

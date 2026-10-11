@@ -35,6 +35,6 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # A token with write access to ordinarysim/homebrew-tap, scoop-bucket and
+          # A token with write access to Derposd/homebrew-tap, scoop-bucket and
           # the winget-pkgs fork. Without it those steps are skipped with a warning.
           PACKAGES_TOKEN: ${{ secrets.PACKAGES_TOKEN }}

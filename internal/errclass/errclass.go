@@ -15,7 +15,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // Classify returns the outcome for err (model.OK for nil).

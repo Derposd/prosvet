@@ -7,11 +7,11 @@
 **Диагностика сети и измерение цензуры.**
 Узнайте, *что* заблокировано или замедлено в вашей сети — и *как именно*.
 
-[![CI](https://github.com/ordinarysim/prosvet/actions/workflows/ci.yml/badge.svg)](https://github.com/ordinarysim/prosvet/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/ordinarysim/prosvet?color=7C9CFF)](https://github.com/ordinarysim/prosvet/releases)
-[![Go](https://img.shields.io/github/go-mod/go-version/ordinarysim/prosvet)](go.mod)
+[![CI](https://github.com/Derposd/prosvet/actions/workflows/ci.yml/badge.svg)](https://github.com/Derposd/prosvet/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Derposd/prosvet?color=7C9CFF)](https://github.com/Derposd/prosvet/releases)
+[![Go](https://img.shields.io/github/go-mod/go-version/Derposd/prosvet)](go.mod)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3FB950)](LICENSE)
-[![Карта](https://img.shields.io/badge/публичная%20карта-online-F0883E)](https://ordinarysim.github.io/prosvet/)
+[![Карта](https://img.shields.io/badge/публичная%20карта-online-F0883E)](https://derposd.github.io/prosvet/)
 
 [English](README.md) · **Русский**
 
@@ -35,7 +35,7 @@
 - **Один статический бинарник** для Windows, Linux, macOS и роутеров OpenWrt. Без зависимостей и регистрации.
 - **Только измерения.** Никаких прокси, туннелей и VPN — Prosvet объясняет, а не перенаправляет трафик.
 - **Приватность по умолчанию.** Всё выполняется локально; ничего никуда не отправляется, пока вы сами не запустите `prosvet submit`.
-- **Открытые данные.** Анонимные результаты собираются в [публичную карту](https://ordinarysim.github.io/prosvet/)
+- **Открытые данные.** Анонимные результаты собираются в [публичную карту](https://derposd.github.io/prosvet/)
   «сервис × провайдер», которую строит GitHub Actions — без сервера и трекеров.
 
 ## Быстрый старт
@@ -130,13 +130,13 @@ DNS
 
 | Способ | Команда |
 |---|---|
-| Бинарник | скачать со страницы [Releases](https://github.com/ordinarysim/prosvet/releases), сверить `checksums.txt`, запустить |
-| Scoop (Windows) | `scoop bucket add prosvet https://github.com/ordinarysim/scoop-bucket && scoop install prosvet` |
+| Бинарник | скачать со страницы [Releases](https://github.com/Derposd/prosvet/releases), сверить `checksums.txt`, запустить |
+| Scoop (Windows) | `scoop bucket add prosvet https://github.com/Derposd/scoop-bucket && scoop install prosvet` |
 | winget (Windows) | `winget install Prosvet.prosvet` |
-| Homebrew (macOS/Linux) | `brew install --cask ordinarysim/tap/prosvet` |
-| Docker | `docker run --rm -it --network host ghcr.io/ordinarysim/prosvet` |
+| Homebrew (macOS/Linux) | `brew install --cask Derposd/tap/prosvet` |
+| Docker | `docker run --rm -it --network host ghcr.io/derposd/prosvet` |
 | Debian/Ubuntu, Fedora, Alpine | пакеты `.deb`, `.rpm`, `.apk` на странице Releases |
-| Go | `go install github.com/ordinarysim/prosvet/cmd/prosvet@latest` |
+| Go | `go install github.com/Derposd/prosvet/cmd/prosvet@latest` |
 | Роутер OpenWrt | скопировать `prosvet_*_linux_mipsle_softfloat` (или `mips_softfloat`, `armv7`, `arm64`) в `/tmp`, `chmod +x`, запустить `./prosvet scan --yes` |
 
 ## Команды
@@ -158,12 +158,12 @@ DNS
 
 ## Публичная карта
 
-[**ordinarysim.github.io/prosvet**](https://ordinarysim.github.io/prosvet/) показывает последний статус
+[**derposd.github.io/prosvet**](https://derposd.github.io/prosvet/) показывает последний статус
 каждого сервиса по провайдерам, регионам и типам подключения, график по дням и историю того, когда
 началась блокировка. Это статический сайт, который GitHub Actions пересобирает из [`results/`](results).
 
 Как добавить данные: `prosvet scan`, `prosvet submit`, затем pull request с файлом или вставка его
-содержимого в [форму issue](https://github.com/ordinarysim/prosvet/issues/new?template=submit-results.yml).
+содержимого в [форму issue](https://github.com/Derposd/prosvet/issues/new?template=submit-results.yml).
 
 ## Приватность
 

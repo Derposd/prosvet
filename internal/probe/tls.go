@@ -11,8 +11,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/errclass"
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/errclass"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // TLSOptions configures a TLS probe.

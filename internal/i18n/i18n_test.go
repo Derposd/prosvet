@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 var placeholder = regexp.MustCompile(`\{[a-z_]+\}`)

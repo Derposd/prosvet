@@ -3,7 +3,7 @@ package classify
 import (
 	"testing"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 var ctx = Context{BaselineKbps: 50000, Connectivity: true}

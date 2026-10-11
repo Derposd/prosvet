@@ -1,10 +1,10 @@
 # Results / Результаты
 
 Anonymous measurements submitted by Prosvet users. GitHub Actions aggregates them into the
-[public map](https://ordinarysim.github.io/prosvet/) (`cmd/prosvet-map`, `.github/workflows/pages.yml`).
+[public map](https://derposd.github.io/prosvet/) (`cmd/prosvet-map`, `.github/workflows/pages.yml`).
 
 Анонимные измерения пользователей Prosvet. GitHub Actions собирает из них
-[публичную карту](https://ordinarysim.github.io/prosvet/).
+[публичную карту](https://derposd.github.io/prosvet/).
 
 ## How to add yours / Как добавить свои
 
@@ -14,11 +14,11 @@ prosvet submit          # shows the file and writes results/AS<asn>/<date>-<id>.
 ```
 
 Then either open a pull request with the new file, **or** paste its content into the
-[“Submit results” issue form](https://github.com/ordinarysim/prosvet/issues/new?template=submit-results.yml) —
+[“Submit results” issue form](https://github.com/Derposd/prosvet/issues/new?template=submit-results.yml) —
 a bot validates it and opens the pull request for you.
 
 Затем откройте pull request с новым файлом **или** вставьте его содержимое в
-[форму «Отправить результаты»](https://github.com/ordinarysim/prosvet/issues/new?template=submit-results.yml) —
+[форму «Отправить результаты»](https://github.com/Derposd/prosvet/issues/new?template=submit-results.yml) —
 бот проверит файл и сам откроет pull request.
 
 ## Format / Формат

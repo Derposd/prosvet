@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/testnet"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/testnet"
 )
 
 // world builds the simulated censored network used by the integration tests.

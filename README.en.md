@@ -7,11 +7,11 @@
 **Network diagnostics & censorship measurement.**
 Find out *what* is blocked or throttled on your network — and *how*.
 
-[![CI](https://github.com/ordinarysim/prosvet/actions/workflows/ci.yml/badge.svg)](https://github.com/ordinarysim/prosvet/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/ordinarysim/prosvet?color=7C9CFF)](https://github.com/ordinarysim/prosvet/releases)
-[![Go](https://img.shields.io/github/go-mod/go-version/ordinarysim/prosvet)](go.mod)
+[![CI](https://github.com/Derposd/prosvet/actions/workflows/ci.yml/badge.svg)](https://github.com/Derposd/prosvet/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Derposd/prosvet?color=7C9CFF)](https://github.com/Derposd/prosvet/releases)
+[![Go](https://img.shields.io/github/go-mod/go-version/Derposd/prosvet)](go.mod)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3FB950)](LICENSE)
-[![Map](https://img.shields.io/badge/public%20map-live-F0883E)](https://ordinarysim.github.io/prosvet/)
+[![Map](https://img.shields.io/badge/public%20map-live-F0883E)](https://derposd.github.io/prosvet/)
 
 **English** · [Русский](README.ru.md)
 
@@ -35,7 +35,7 @@ service and tells you, in plain language, which method is used, how sure it is a
 - **One static binary** for Windows, Linux, macOS and OpenWrt routers. No dependencies, no account.
 - **Measurement only.** No proxies, tunnels or VPN code — Prosvet explains, it does not route traffic.
 - **Private by default.** Everything runs locally; nothing is sent anywhere unless you run `prosvet submit`.
-- **Open data.** Anonymous results feed a [public map](https://ordinarysim.github.io/prosvet/) of
+- **Open data.** Anonymous results feed a [public map](https://derposd.github.io/prosvet/) of
   service × provider, built by GitHub Actions — no server, no trackers.
 
 ## Quick start
@@ -130,13 +130,13 @@ For each endpoint of each service:
 
 | Method | Command |
 |---|---|
-| Binary | download from [Releases](https://github.com/ordinarysim/prosvet/releases), verify `checksums.txt`, run |
-| Scoop (Windows) | `scoop bucket add prosvet https://github.com/ordinarysim/scoop-bucket && scoop install prosvet` |
+| Binary | download from [Releases](https://github.com/Derposd/prosvet/releases), verify `checksums.txt`, run |
+| Scoop (Windows) | `scoop bucket add prosvet https://github.com/Derposd/scoop-bucket && scoop install prosvet` |
 | winget (Windows) | `winget install Prosvet.prosvet` |
-| Homebrew (macOS/Linux) | `brew install --cask ordinarysim/tap/prosvet` |
-| Docker | `docker run --rm -it --network host ghcr.io/ordinarysim/prosvet` |
+| Homebrew (macOS/Linux) | `brew install --cask Derposd/tap/prosvet` |
+| Docker | `docker run --rm -it --network host ghcr.io/derposd/prosvet` |
 | Debian/Ubuntu, Fedora, Alpine | `.deb`, `.rpm`, `.apk` packages on the Releases page |
-| Go | `go install github.com/ordinarysim/prosvet/cmd/prosvet@latest` |
+| Go | `go install github.com/Derposd/prosvet/cmd/prosvet@latest` |
 | OpenWrt router | copy `prosvet_*_linux_mipsle_softfloat` (or `mips_softfloat`, `armv7`, `arm64`) to `/tmp`, `chmod +x`, run `./prosvet scan --yes` |
 
 ## Commands
@@ -157,12 +157,12 @@ Useful flags: `--lang ru|en`, `--brief`, `--verbose`, `--timeout-scale 2` for sl
 
 ## Public map
 
-[**ordinarysim.github.io/prosvet**](https://ordinarysim.github.io/prosvet/) shows the latest status of
+[**derposd.github.io/prosvet**](https://derposd.github.io/prosvet/) shows the latest status of
 every service per provider, region and connection type, a daily timeline and the history of when
 blocking started. It is a static site rebuilt by GitHub Actions from [`results/`](results).
 
 To contribute data: `prosvet scan`, `prosvet submit`, then open a pull request with the file or paste
-it into the [issue form](https://github.com/ordinarysim/prosvet/issues/new?template=submit-results.yml).
+it into the [issue form](https://github.com/Derposd/prosvet/issues/new?template=submit-results.yml).
 
 ## Privacy
 

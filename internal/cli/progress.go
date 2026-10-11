@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ordinarysim/prosvet/internal/engine"
-	"github.com/ordinarysim/prosvet/internal/i18n"
-	"github.com/ordinarysim/prosvet/internal/theme"
+	"github.com/Derposd/prosvet/internal/engine"
+	"github.com/Derposd/prosvet/internal/i18n"
+	"github.com/Derposd/prosvet/internal/theme"
 )
 
 // progress prints scan progress to stderr: a live single line on terminals,

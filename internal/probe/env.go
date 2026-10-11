@@ -16,8 +16,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/brand"
-	"github.com/ordinarysim/prosvet/internal/fingerprint"
+	"github.com/Derposd/prosvet/internal/brand"
+	"github.com/Derposd/prosvet/internal/fingerprint"
 )
 
 // Dialer opens network connections. It is an interface so tests can simulate

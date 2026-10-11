@@ -25,7 +25,7 @@ import (
 	"golang.org/x/image/math/fixed"
 	"golang.org/x/image/vector"
 
-	"github.com/ordinarysim/prosvet/internal/brand"
+	"github.com/Derposd/prosvet/internal/brand"
 )
 
 var (

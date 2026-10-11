@@ -11,8 +11,8 @@ import (
 
 	"github.com/quic-go/quic-go"
 
-	"github.com/ordinarysim/prosvet/internal/errclass"
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/errclass"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 func init() {

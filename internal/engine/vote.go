@@ -3,7 +3,7 @@ package engine
 import (
 	"sort"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // pick returns the winning key: OK when it is the majority, otherwise the most

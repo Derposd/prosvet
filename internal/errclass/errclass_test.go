@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 func TestClassify(t *testing.T) {

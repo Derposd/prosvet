@@ -11,9 +11,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ordinarysim/prosvet/internal/catalog"
-	"github.com/ordinarysim/prosvet/internal/mapgen"
-	"github.com/ordinarysim/prosvet/targets"
+	"github.com/Derposd/prosvet/internal/catalog"
+	"github.com/Derposd/prosvet/internal/mapgen"
+	"github.com/Derposd/prosvet/targets"
 )
 
 func main() {

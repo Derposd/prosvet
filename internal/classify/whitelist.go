@@ -1,7 +1,7 @@
 package classify
 
 import (
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // WhitelistThresholds mirror whitelist.yaml.

@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/ordinarysim/prosvet/internal/errclass"
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/errclass"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 // HTTPOptions configures an HTTP fetch over an existing connection.

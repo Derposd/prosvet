@@ -5,7 +5,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/model"
 )
 
 var statusEmoji = map[model.Status]string{

@@ -7,9 +7,9 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/ordinarysim/prosvet/internal/model"
-	"github.com/ordinarysim/prosvet/internal/report"
-	"github.com/ordinarysim/prosvet/internal/theme"
+	"github.com/Derposd/prosvet/internal/model"
+	"github.com/Derposd/prosvet/internal/report"
+	"github.com/Derposd/prosvet/internal/theme"
 )
 
 // item is a row of the results list: a category header or a target.

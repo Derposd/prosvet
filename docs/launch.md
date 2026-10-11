@@ -2,9 +2,9 @@
 
 ## 1. Before the first push
 
-- [ ] Decide the GitHub owner. The code uses `ordinarysim/prosvet` in `go.mod`, `internal/brand/brand.go`,
+- [ ] Decide the GitHub owner. The code uses `Derposd/prosvet` in `go.mod`, `internal/brand/brand.go`,
       README badges, `.goreleaser.yaml`, issue templates and `results/README.md`. If the owner differs:
-      `grep -rl "ordinarysim" . | xargs sed -i 's/ordinarysim/<owner>/g'` and `go mod tidy`.
+      `grep -rl "Derposd" . | xargs sed -i 's/Derposd/<owner>/g'` and `go mod tidy`.
 - [ ] Review `docs/research.md` once more (sources are dated 2026-10-10).
 - [ ] Run `go test ./... && golangci-lint run ./...` and `go run ./cmd/prosvet demo`.
 - [ ] Run a real scan on 2–3 networks (home, mobile, a friend in another region); sanity-check verdicts.
@@ -12,9 +12,9 @@
 ## 2. Repository settings
 
 ```bash
-gh repo create ordinarysim/prosvet --public --source . --push \
+gh repo create Derposd/prosvet --public --source . --push \
   --description "Network diagnostics & censorship measurement: find out what is blocked or throttled on your network and how (DNS, IP, SNI, TLS, QUIC, 16 KB throttling, whitelists)"
-gh repo edit ordinarysim/prosvet --homepage https://ordinarysim.github.io/prosvet/ \
+gh repo edit Derposd/prosvet --homepage https://derposd.github.io/prosvet/ \
   --add-topic network-diagnostics --add-topic censorship --add-topic dpi --add-topic dns \
   --add-topic tls --add-topic cli --add-topic tui --add-topic golang \
   --add-topic censorship-measurement --add-topic ooni --add-topic quic --add-topic russia
@@ -34,13 +34,13 @@ gh label create "good first issue" --color 3FB950 --force
 
 ## 3. Packaging
 
-- [ ] Create repos `ordinarysim/homebrew-tap`, `ordinarysim/scoop-bucket` (empty, public) and fork
-      `microsoft/winget-pkgs` to `ordinarysim/winget-pkgs`.
+- [ ] Create repos `Derposd/homebrew-tap`, `Derposd/scoop-bucket` (empty, public) and fork
+      `microsoft/winget-pkgs` to `Derposd/winget-pkgs`.
 - [ ] Create a fine-grained token with *Contents: write* and *Pull requests: write* on those three repos,
       save it as the `PACKAGES_TOKEN` secret.
 - [ ] `git tag v0.1.0 && git push --tags` → the Release workflow builds everything as a **draft** release;
       check assets (`checksums.txt`, OpenWrt binaries are UPX-compressed), then publish.
-- [ ] Check `ghcr.io/ordinarysim/prosvet` is public (Packages → settings → visibility).
+- [ ] Check `ghcr.io/derposd/prosvet` is public (Packages → settings → visibility).
 - [ ] Test install paths: Releases binary, `scoop install`, `brew install --cask`, `docker run`, `go install`.
 - [ ] The winget PR is opened as a draft; mark it ready after the first manual validation.
 
