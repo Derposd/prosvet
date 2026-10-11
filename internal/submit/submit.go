@@ -244,7 +244,7 @@ func Validate(data []byte) error {
 	} else if d, err := time.Parse("2006-01-02", s.Date); err != nil || d.After(time.Now().Add(48*time.Hour)) || d.Year() < 2026 {
 		add("date %q out of range", s.Date)
 	}
-	if s.Network.ASN <= 0 || s.Network.ASN > 4294967295 {
+	if s.Network.ASN <= 0 || int64(s.Network.ASN) > 4294967295 {
 		add("invalid ASN")
 	}
 	if s.Network.Region != "" && !regionRe.MatchString(s.Network.Region) {
