@@ -1,0 +1,185 @@
+# GoReleaser v2 configuration: https://goreleaser.com
+# Local dry run: goreleaser release --snapshot --clean
+version: 2
+
+project_name: prosvet
+
+before:
+  hooks:
+    - go mod tidy
+    - go test -short ./...
+
+builds:
+  - id: prosvet
+    main: ./cmd/prosvet
+    binary: prosvet
+    env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{ .Version }} -X main.commit={{ .ShortCommit }} -X main.date={{ .Date }}
+    goos: [linux, windows, darwin, freebsd]
+    goarch: [amd64, arm64, arm, mips, mipsle, mips64, mips64le, "386"]
+    goarm: ["6", "7"]
+    gomips: [softfloat]
+    ignore:
+      - { goos: windows, goarch: arm }
+      - { goos: windows, goarch: mips }
+      - { goos: windows, goarch: mipsle }
+      - { goos: windows, goarch: mips64 }
+      - { goos: windows, goarch: mips64le }
+      - { goos: darwin, goarch: arm }
+      - { goos: darwin, goarch: "386" }
+      - { goos: darwin, goarch: mips }
+      - { goos: darwin, goarch: mipsle }
+      - { goos: darwin, goarch: mips64 }
+      - { goos: darwin, goarch: mips64le }
+      - { goos: freebsd, goarch: mips }
+      - { goos: freebsd, goarch: mipsle }
+      - { goos: freebsd, goarch: mips64 }
+      - { goos: freebsd, goarch: mips64le }
+      - { goos: freebsd, goarch: arm }
+
+# Smaller binaries for routers (OpenWrt has little flash).
+upx:
+  - enabled: true
+    ids: [prosvet]
+    goos: [linux]
+    goarch: [mips, mipsle, arm]
+    compress: best
+    lzma: true
+
+archives:
+  - id: default
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}
+    files:
+      - LICENSE
+      - README.md
+      - README.ru.md
+      - PRIVACY.md
+
+checksum:
+  name_template: checksums.txt
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "^ci:"
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\(.+\))??!?:.+$'
+      order: 0
+    - title: Fixes
+      regexp: '^.*?fix(\(.+\))??!?:.+$'
+      order: 1
+    - title: Targets
+      regexp: '^.*?targets(\(.+\))??!?:.+$'
+      order: 2
+    - title: Other
+      order: 999
+
+nfpms:
+  - id: packages
+    package_name: prosvet
+    homepage: https://github.com/ordinarysim/prosvet
+    maintainer: Prosvet contributors <noreply@github.com>
+    description: Network diagnostics & censorship measurement tool.
+    license: MIT
+    formats: [deb, rpm, apk]
+    bindir: /usr/bin
+    section: net
+    contents:
+      - src: ./PRIVACY.md
+        dst: /usr/share/doc/prosvet/PRIVACY.md
+
+dockers_v2:
+  - images:
+      - ghcr.io/ordinarysim/prosvet
+    tags:
+      - "v{{ .Version }}"
+      - "{{ if not .Prerelease }}latest{{ end }}"
+    dockerfile: Dockerfile
+    platforms:
+      - linux/amd64
+      - linux/arm64
+    labels:
+      org.opencontainers.image.title: "{{ .ProjectName }}"
+      org.opencontainers.image.description: "Network diagnostics & censorship measurement"
+      org.opencontainers.image.source: "https://github.com/ordinarysim/prosvet"
+      org.opencontainers.image.version: "{{ .Version }}"
+      org.opencontainers.image.licenses: MIT
+
+homebrew_casks:
+  - name: prosvet
+    binaries: [prosvet]
+    homepage: https://github.com/ordinarysim/prosvet
+    description: Network diagnostics & censorship measurement
+    repository:
+      owner: ordinarysim
+      name: homebrew-tap
+      token: "{{ .Env.PACKAGES_TOKEN }}"
+    commit_author:
+      name: prosvet-release-bot
+      email: noreply@github.com
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/prosvet"]
+          end
+
+scoops:
+  - name: prosvet
+    repository:
+      owner: ordinarysim
+      name: scoop-bucket
+      token: "{{ .Env.PACKAGES_TOKEN }}"
+    homepage: https://github.com/ordinarysim/prosvet
+    description: Network diagnostics & censorship measurement
+    license: MIT
+
+winget:
+  - name: prosvet
+    publisher: Prosvet
+    publisher_url: https://github.com/ordinarysim/prosvet
+    short_description: Network diagnostics & censorship measurement
+    description: Checks which services are blocked or throttled on your network and explains how (DNS, IP, SNI, TLS, QUIC, throttling, whitelist mode).
+    license: MIT
+    homepage: https://github.com/ordinarysim/prosvet
+    tags: [network, diagnostics, censorship, dns, tls, cli]
+    repository:
+      owner: ordinarysim
+      name: winget-pkgs
+      branch: "prosvet-{{ .Version }}"
+      token: "{{ .Env.PACKAGES_TOKEN }}"
+      pull_request:
+        enabled: true
+        draft: true
+        base:
+          owner: microsoft
+          name: winget-pkgs
+          branch: master
+
+release:
+  github:
+    owner: ordinarysim
+    name: prosvet
+  draft: true
+  footer: |
+    **Checksums:** `checksums.txt`. Verify before running: `sha256sum -c checksums.txt --ignore-missing`.
+
+    Prosvet only measures. It contains no proxy, tunnel or VPN code. See PRIVACY.md.

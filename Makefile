@@ -3,7 +3,7 @@ COMMIT  ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo none)
 DATE    ?= $(shell date -u +%Y-%m-%dT%H:%M:%SZ)
 LDFLAGS := -s -w -X main.version=$(VERSION) -X main.commit=$(COMMIT) -X main.date=$(DATE)
 
-.PHONY: build test test-short lint cover tidy snapshot demo gif map clean
+.PHONY: build test test-short lint cover tidy snapshot demo gif map assets readme clean
 
 build:
 	CGO_ENABLED=0 go build -trimpath -ldflags "$(LDFLAGS)" -o bin/prosvet ./cmd/prosvet
@@ -31,6 +31,12 @@ demo: build
 
 gif: build
 	vhs docs/vhs/demo.tape
+
+assets:
+	go run ./tools/assets -out docs/assets
+
+readme:
+	cp README.en.md README.md
 
 map:
 	go run ./cmd/prosvet-map -results results -out site
