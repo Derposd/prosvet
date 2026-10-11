@@ -160,7 +160,7 @@ func (m *ui) detail(width, height int) string {
 		if t.Subtype != "" {
 			title += " — " + t.Subtype
 		}
-		sb.WriteString(theme.Title.Render(title) + theme.Dim.Render(" · "+t.Confidence) + "\n")
+		sb.WriteString(wrap.Render(theme.Title.Render(title)+theme.Dim.Render(" · "+t.Confidence)) + "\n")
 	}
 	sb.WriteString("\n" + theme.Dim.Render(m.b.T("ui.why")) + "\n")
 	sb.WriteString(wrap.Render(t.Explain) + "\n")

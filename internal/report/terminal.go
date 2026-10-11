@@ -14,6 +14,7 @@ import (
 // TerminalOptions control the plain terminal output.
 type TerminalOptions struct {
 	Verbose bool // print every target's evidence and endpoints
+	Brief   bool // only the status table, DNS findings and the summary
 	Width   int
 }
 
@@ -86,7 +87,7 @@ func WriteTerminal(w io.Writer, v *View, opt TerminalOptions) error {
 		writeWhitelist(&sb, v.Whitelist)
 	}
 
-	if !opt.Verbose && len(v.Problems) > 0 {
+	if !opt.Verbose && !opt.Brief && len(v.Problems) > 0 {
 		p("\n%s\n", theme.Heading.Render(strings.ToUpper(v.Labels.Problems)))
 		for i, t := range v.Problems {
 			if i >= 8 {

@@ -302,6 +302,7 @@ cli:
     no_color: "disable colours"
     targets_dir: "directory with your own targets/*.yaml (overrides files of the same name)"
     yes: "do not ask for confirmation"
+    brief: "print only the status table and the summary"
     verbose: "print evidence for every target"
     target: "check only these targets (id, repeatable or comma-separated)"
     category: "check only these categories (repeatable or comma-separated)"

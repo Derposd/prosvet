@@ -36,6 +36,7 @@ type app struct {
 	targetsDir string
 	yes        bool
 	verbose    bool
+	brief      bool
 	stdout     io.Writer
 	stderr     io.Writer
 	stdin      io.Reader
@@ -100,6 +101,7 @@ func (a *app) rootCmd() *cobra.Command {
 	pf.StringVar(&a.targetsDir, "targets-dir", "", b.T("cli.flag.targets_dir"))
 	pf.BoolVarP(&a.yes, "yes", "y", false, b.T("cli.flag.yes"))
 	pf.BoolVarP(&a.verbose, "verbose", "v", false, b.T("cli.flag.verbose"))
+	pf.BoolVar(&a.brief, "brief", false, b.T("cli.flag.brief"))
 
 	root.AddCommand(a.scanCmd(), a.whitelistCmd(), a.targetsCmd(), a.versionCmd(), a.reportCmd(),
 		a.submitCmd(), a.serveCmd(), a.demoCmd())

@@ -159,7 +159,7 @@ func (a *app) render(rep *model.Report, cat *catalog.Catalog, format, output str
 	v := report.Build(rep, a.b, a.categoryTitles(cat))
 	switch strings.ToLower(format) {
 	case "", "terminal", "text":
-		return report.WriteTerminal(w, v, report.TerminalOptions{Verbose: a.verbose})
+		return report.WriteTerminal(w, v, report.TerminalOptions{Verbose: a.verbose, Brief: a.brief})
 	case "json":
 		return report.WriteJSON(w, rep)
 	case "md", "markdown":

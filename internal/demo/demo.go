@@ -40,7 +40,7 @@ func hosts() []testnet.Host {
 		h("gov-portal.demo", "198.51.100.51"),
 		h("bank.demo", "198.51.100.52"),
 		h("search.demo", "198.51.100.53"),
-		h("mirror.demo", "198.51.100.60"),
+		{Name: "mirror.demo", IP: "198.51.100.60", Rules: rule("mirror.demo", testnet.Action{Kind: testnet.Rate, RateBps: 600000})},
 	}
 }
 
