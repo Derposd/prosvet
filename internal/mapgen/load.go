@@ -84,9 +84,8 @@ func Load(root string) ([]Entry, []Problem, error) {
 		}
 		s, checkErr := CheckFile(root, path)
 		if checkErr != nil {
-			// An invalid file is reported, not fatal for the walk.
 			problems = append(problems, Problem{Path: path, Err: checkErr})
-			return nil
+			return nil //nolint:nilerr // an invalid file is reported, not fatal for the walk
 		}
 		entries = append(entries, Entry{Path: path, Sub: *s})
 		return nil
