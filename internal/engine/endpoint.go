@@ -77,6 +77,7 @@ func (e *Engine) measureTarget(ctx context.Context, t catalog.Target, cctx class
 // measureEndpoint runs all configured tests for one endpoint.
 func (e *Engine) measureEndpoint(ctx context.Context, ep catalog.Endpoint) model.EndpointResult {
 	res := model.EndpointResult{Name: ep.Name(), Port: ep.EffectivePort(), Note: ep.Note}
+	res.ProtocolFocus = (ep.Has(catalog.TestQUIC) || ep.Has(catalog.TestECH)) && !ep.Has(catalog.TestHTTP)
 	R := e.Opt.Repeats
 	host := ep.Host
 

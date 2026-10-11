@@ -85,7 +85,7 @@ interception:
     qname: id.server
     qclass: CH
     qtype: TXT
-    expect: colo_code          # three-letter IATA code, e.g. "FRA"
+    expect: colo_code          # airport code with optional node number, e.g. "FRA" or "dme04"
   - id: google-myaddr
     resolver: "8.8.8.8"
     qname: o-o.myaddr.l.google.com

@@ -307,7 +307,9 @@ func (e *Env) FetchECHConfig(ctx context.Context, specs []ResolverSpec, host str
 	return nil, lastErr
 }
 
-var coloRe = regexp.MustCompile(`^[A-Z]{3}$`)
+// coloRe matches Cloudflare's id.server answer: an airport code with an
+// optional node number, e.g. "FRA" or "dme04".
+var coloRe = regexp.MustCompile(`(?i)^[a-z]{3}[0-9]*$`)
 
 // Intercept runs one interception probe. The returned detail never contains
 // IP addresses (some probes echo the client address).

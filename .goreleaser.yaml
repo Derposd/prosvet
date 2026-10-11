@@ -1,4 +1,6 @@
 # GoReleaser v2 configuration: https://goreleaser.com
+# Homebrew/Scoop/winget publishing is skipped automatically until the
+# PACKAGES_TOKEN secret is configured (see docs/launch.md).
 # Local dry run: goreleaser release --snapshot --clean
 version: 2
 
@@ -125,6 +127,7 @@ dockers_v2:
 
 homebrew_casks:
   - name: prosvet
+    skip_upload: "{{ if not .Env.PACKAGES_TOKEN }}true{{ end }}"
     binaries: [prosvet]
     homepage: https://github.com/Derposd/prosvet
     description: Network diagnostics & censorship measurement
@@ -144,6 +147,7 @@ homebrew_casks:
 
 scoops:
   - name: prosvet
+    skip_upload: "{{ if not .Env.PACKAGES_TOKEN }}true{{ end }}"
     repository:
       owner: Derposd
       name: scoop-bucket
@@ -154,6 +158,7 @@ scoops:
 
 winget:
   - name: prosvet
+    skip_upload: "{{ if not .Env.PACKAGES_TOKEN }}true{{ end }}"
     publisher: Prosvet
     publisher_url: https://github.com/Derposd/prosvet
     short_description: Network diagnostics & censorship measurement

@@ -265,6 +265,9 @@ type EndpointResult struct {
 	ECH       *TLSResult    `json:"ech,omitempty"`
 	Verdict   Verdict       `json:"verdict"`
 	Secondary []Kind        `json:"secondary,omitempty"`
+	// ProtocolFocus marks endpoints whose purpose is a protocol probe (QUIC,
+	// ECH); their TCP/TLS handshake only serves as a control.
+	ProtocolFocus bool `json:"protocol_focus,omitempty"`
 }
 
 // TLSVariant returns the aggregated TLS result for a variant, or nil.

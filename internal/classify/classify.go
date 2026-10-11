@@ -144,6 +144,16 @@ func endpoint(ep *model.EndpointResult, c Context) (model.Verdict, []model.Kind)
 		return v, secondary
 	}
 
+	// Protocol probes (QUIC/ECH category): the working handshake is the control,
+	// the protocol result is the verdict.
+	if ep.ProtocolFocus && len(protocol) > 0 {
+		var rest []model.Kind
+		for _, p := range protocol[1:] {
+			rest = append(rest, p.Kind)
+		}
+		return protocol[0], rest
+	}
+
 	// The handshake works; look at the HTTP exchange.
 	notes := certNotes(ep, real)
 	if v, ok := httpVerdict(ep.HTTP, c); ok {
@@ -212,13 +222,18 @@ func transportKind(ep *model.EndpointResult, main *model.TLSResult) (model.Kind,
 			Confidence: confFromRuns(model.High, main.Agree, main.Runs), Evidence: evidence}
 	}
 	tested := none != nil || random != nil
-	allReset := main.Outcome == model.Reset && (!tested || variantsAre(model.Reset, none, random))
-	if allReset {
+	if main.Outcome == model.Reset && (!tested || anyVariant(model.Reset, none, random)) {
+		// Resets regardless of the server name. All variants reset: medium
+		// confidence; some reset and some silent: low.
+		conf := confFromRuns(model.Medium, main.Agree, main.Runs)
 		if tested {
 			evidence = append(evidence, ev("ev.tls.all_variants_failed", "outcome", "reset"))
+			if !variantsAre(model.Reset, none, random) {
+				conf = model.Low
+			}
 		}
 		return model.KindTLSReset, model.Verdict{Kind: model.KindTLSReset, Subtype: "reset",
-			Confidence: confFromRuns(model.Medium, main.Agree, main.Runs), Evidence: evidence}
+			Confidence: conf, Evidence: evidence}
 	}
 	if main.Outcome == model.EOF {
 		return model.KindTLSReset, model.Verdict{Kind: model.KindTLSReset, Subtype: "eof",
@@ -229,6 +244,15 @@ func transportKind(ep *model.EndpointResult, main *model.TLSResult) (model.Kind,
 	}
 	return model.KindTimeout, model.Verdict{Kind: model.KindTimeout, Subtype: "handshake",
 		Confidence: model.Low, Evidence: evidence}
+}
+
+func anyVariant(o model.Outcome, vs ...*model.TLSResult) bool {
+	for _, v := range vs {
+		if v != nil && v.Outcome == o {
+			return true
+		}
+	}
+	return false
 }
 
 func variantsAre(o model.Outcome, vs ...*model.TLSResult) bool {

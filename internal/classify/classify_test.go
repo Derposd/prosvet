@@ -253,6 +253,36 @@ func TestSubstitutedDNS(t *testing.T) {
 	}
 }
 
+// Found on a real network: QUIC to Cloudflare fails for any SNI while TLS works.
+// For a protocol-focused endpoint the QUIC result must be the verdict.
+func TestProtocolFocusMakesQUICPrimary(t *testing.T) {
+	ep := model.EndpointResult{Name: "cloudflare-quic.com", IP: "1.2.3.4", Port: 443, IPSource: "system", DNS: dnsOK("1.2.3.4"),
+		ProtocolFocus: true, TLS: []*model.TLSResult{tlsOK("real")},
+		QUIC: []*model.QUICResult{
+			{Version: 1, Variant: "random", Outcome: model.Timeout, Agree: 3, Runs: 3},
+			{Version: 1, Variant: "real", Outcome: model.Timeout, Agree: 3, Runs: 3},
+		}}
+	Endpoint(&ep, ctx)
+	if ep.Verdict.Kind != model.KindQUICBlocked || ep.Verdict.Confidence != model.Medium {
+		t.Fatalf("got %s/%s", ep.Verdict.Kind, ep.Verdict.Confidence)
+	}
+	tr := model.TargetResult{Endpoints: []model.EndpointResult{ep}}
+	Target(&tr, ctx)
+	if tr.Status != model.StatusBlocked {
+		t.Fatalf("protocol target status %s", tr.Status)
+	}
+}
+
+// Found on a real network (accounts.ea.com): real and random SNI reset, no SNI silent.
+func TestMixedResetsAreTLSReset(t *testing.T) {
+	ep := model.EndpointResult{Name: "accounts.example", IP: "1.2.3.4", Port: 443, IPSource: "system", DNS: dnsOK("1.2.3.4"),
+		TLS: []*model.TLSResult{tlsFail("real", "handshake", model.Reset), tlsFail("none", "handshake", model.Timeout), tlsFail("random", "handshake", model.Reset)}}
+	Endpoint(&ep, ctx)
+	if ep.Verdict.Kind != model.KindTLSReset || ep.Verdict.Confidence != model.Low {
+		t.Fatalf("got %s/%s", ep.Verdict.Kind, ep.Verdict.Confidence)
+	}
+}
+
 func TestQUICSecondaryOnWorkingSite(t *testing.T) {
 	ep := model.EndpointResult{Name: "www.youtube.com", IP: "1.2.3.4", Port: 443, IPSource: "system", DNS: dnsOK("1.2.3.4"),
 		TLS: []*model.TLSResult{tlsOK("real")}, HTTP: httpOK(),
