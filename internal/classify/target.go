@@ -54,8 +54,10 @@ func Target(t *model.TargetResult, c Context) {
 		} else {
 			t.Status = model.StatusPartial
 		}
-		t.Verdict.Evidence = append(t.Verdict.Evidence, ev("ev.endpoints",
-			"affected", strconv.Itoa(blocking), "total", strconv.Itoa(n)))
+		if n > 1 {
+			t.Verdict.Evidence = append(t.Verdict.Evidence, ev("ev.endpoints",
+				"affected", strconv.Itoa(blocking), "total", strconv.Itoa(n)))
+		}
 		if throttleV != nil {
 			secondary = append(secondary, throttleV.Kind)
 		}

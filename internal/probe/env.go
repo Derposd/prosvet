@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ordinarysim/prosvet/internal/brand"
 	"github.com/ordinarysim/prosvet/internal/fingerprint"
 )
 
@@ -84,7 +85,7 @@ func NewEnv(version string) *Env {
 	return &Env{
 		Dialer:    d,
 		Timeouts:  DefaultTimeouts(),
-		UserAgent: "prosvet/" + version + " (+https://github.com/ordinarysim/prosvet)",
+		UserAgent: "prosvet/" + version + " (+" + brand.RepoURL + ")",
 		LookupHost: func(ctx context.Context, host string) ([]string, error) {
 			return r.LookupHost(ctx, host)
 		},

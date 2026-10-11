@@ -7,6 +7,7 @@ import (
 
 	"github.com/ordinarysim/prosvet/internal/i18n"
 	"github.com/ordinarysim/prosvet/internal/model"
+	"github.com/ordinarysim/prosvet/internal/netinfo"
 )
 
 // View is a renderer-independent, localised projection of a report. All
@@ -23,6 +24,7 @@ type View struct {
 	Network     NetworkView
 	Summary     model.Summary
 	SummaryText string
+	Counts      []CountView
 	Baseline    string
 	Groups      []GroupView
 	Problems    []TargetView
@@ -35,18 +37,34 @@ type View struct {
 
 // Labels are localised headings used by the renderers.
 type Labels struct {
-	Problems  string
-	DNS       string
-	DNSNone   string
-	Network   string
-	Endpoints string
-	Evidence  string
-	Secondary string
-	Generated string
-	Domestic  string
-	Foreign   string
-	Whitelist string
-	Summary   string
+	Title       string
+	Problems    string
+	DNS         string
+	DNSNone     string
+	Network     string
+	Endpoints   string
+	Evidence    string
+	Secondary   string
+	Generated   string
+	Domestic    string
+	Foreign     string
+	Whitelist   string
+	Summary     string
+	Date        string
+	Service     string
+	Status      string
+	Method      string
+	Confidence  string
+	PrivacyNote string
+	OnlyIssues  string
+	About       string
+}
+
+// CountView is one summary counter.
+type CountView struct {
+	Status model.Status
+	N      int
+	Word   string
 }
 
 // NetworkView describes the network in words.
@@ -139,11 +157,16 @@ func Build(rep *model.Report, b *i18n.Bundle, titles CategoryTitles) *View {
 		Summary:    rep.Summary,
 		Version:    rep.Tool.Version,
 		Labels: Labels{
+			Title:    b.T("report.title"),
 			Problems: b.T("report.problems"), DNS: b.T("dns.title"), DNSNone: b.T("dns.none"),
 			Network: b.T("network.title"), Endpoints: b.T("report.endpoints"), Evidence: b.T("report.evidence"),
-			Secondary: b.T("report.secondary"), Generated: b.T("report.generated"),
-			Domestic: b.T("whitelist.domestic"), Foreign: b.T("whitelist.foreign"),
+			Secondary: b.T("report.secondary"),
+			Generated: b.T("report.generated", "version", rep.Tool.Version, "date", rep.FinishedAt.Local().Format("2006-01-02 15:04")),
+			Domestic:  b.T("whitelist.domestic"), Foreign: b.T("whitelist.foreign"),
 			Whitelist: b.T("whitelist.title"), Summary: b.T("report.summary"),
+			Date: b.T("report.date"), Service: b.T("report.service"), Status: b.T("report.status"),
+			Method: b.T("report.method"), Confidence: b.T("report.confidence"),
+			PrivacyNote: b.T("report.privacy_note"), OnlyIssues: b.T("report.only_issues"), About: b.T("report.about"),
 		},
 	}
 	if !rep.StartedAt.IsZero() {
@@ -152,9 +175,18 @@ func Build(rep *model.Report, b *i18n.Bundle, titles CategoryTitles) *View {
 			v.Duration = rep.FinishedAt.Sub(rep.StartedAt).Round(1e9).String()
 		}
 	}
-	v.SummaryText = b.T("cli.summary",
-		"ok", fmt.Sprint(rep.Summary.OK), "throttled", fmt.Sprint(rep.Summary.Throttled),
-		"partial", fmt.Sprint(rep.Summary.Partial), "blocked", fmt.Sprint(rep.Summary.Blocked))
+	s := rep.Summary
+	v.Counts = []CountView{
+		{model.StatusOK, s.OK, b.T("summary.ok")},
+		{model.StatusThrottled, s.Throttled, b.T("summary.throttled")},
+		{model.StatusPartial, s.Partial, b.T("summary.partial")},
+		{model.StatusBlocked, s.Blocked, b.T("summary.blocked")},
+	}
+	parts := make([]string, 0, len(v.Counts))
+	for _, c := range v.Counts {
+		parts = append(parts, fmt.Sprintf("%d %s", c.N, c.Word))
+	}
+	v.SummaryText = strings.Join(parts, " · ")
 	if rep.Baseline != nil {
 		v.Baseline = b.T("cli.baseline", "kbps", fmt.Sprintf("%.0f", rep.Baseline.Kbps))
 	}
@@ -227,8 +259,14 @@ func buildNetwork(n model.NetworkInfo, b *i18n.Bundle) NetworkView {
 	if n.ASN != 0 {
 		nv.ASN = fmt.Sprintf("AS%d", n.ASN)
 	}
-	if nv.Region == "" {
+	if nv.Region == "" && n.Region != "" {
 		nv.Region = n.Region
+		if r := netinfo.RegionByCode(n.Region); r != nil {
+			nv.Region = r.EN
+			if b.Lang == "ru" {
+				nv.Region = r.RU
+			}
+		}
 	}
 	if nv.Region == "" {
 		nv.Region = unknown

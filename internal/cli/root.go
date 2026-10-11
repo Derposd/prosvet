@@ -88,6 +88,9 @@ func (a *app) rootCmd() *cobra.Command {
 			}
 		},
 		RunE: func(cmd *cobra.Command, _ []string) error {
+			if isTerminal(os.Stdout) && isTerminal(os.Stdin) {
+				return a.runTUI(cmd.Context())
+			}
 			return a.runScan(cmd.Context(), defaultScanFlags())
 		},
 	}
@@ -98,7 +101,8 @@ func (a *app) rootCmd() *cobra.Command {
 	pf.BoolVarP(&a.yes, "yes", "y", false, b.T("cli.flag.yes"))
 	pf.BoolVarP(&a.verbose, "verbose", "v", false, b.T("cli.flag.verbose"))
 
-	root.AddCommand(a.scanCmd(), a.whitelistCmd(), a.targetsCmd(), a.versionCmd(), a.reportCmd())
+	root.AddCommand(a.scanCmd(), a.whitelistCmd(), a.targetsCmd(), a.versionCmd(), a.reportCmd(),
+		a.submitCmd(), a.serveCmd(), a.demoCmd())
 	return root
 }
 

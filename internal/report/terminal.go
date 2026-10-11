@@ -41,6 +41,12 @@ func WriteTerminal(w io.Writer, v *View, opt TerminalOptions) error {
 		}
 	}
 	nameW = min(nameW, 28)
+	statusW := 0
+	for _, g := range v.Groups {
+		for _, t := range g.Targets {
+			statusW = max(statusW, lipgloss.Width(t.StatusText))
+		}
+	}
 
 	for _, g := range v.Groups {
 		p("\n%s\n", theme.Heading.Render(strings.ToUpper(g.Title)))
@@ -49,15 +55,16 @@ func WriteTerminal(w io.Writer, v *View, opt TerminalOptions) error {
 			if lipgloss.Width(name) > nameW {
 				name = string([]rune(name)[:nameW-1]) + "…"
 			}
+			pad := strings.Repeat(" ", max(0, statusW-lipgloss.Width(t.StatusText)))
 			line := fmt.Sprintf("  %s %-*s  %s", theme.Dot(t.Status), nameW, name, theme.StatusLabel(t.Status, t.StatusText))
 			if t.Status != model.StatusOK {
 				detail := t.KindTitle
 				if t.Subtype != "" {
 					detail += " — " + t.Subtype
 				}
-				line += theme.Dim.Render("  " + detail + " · " + t.Confidence)
+				line += pad + theme.Dim.Render("  "+detail+" · "+t.Confidence)
 			} else if len(t.Secondary) > 0 {
-				line += theme.Dim.Render("  (" + strings.Join(t.Secondary, ", ") + ")")
+				line += pad + theme.Dim.Render("  ("+strings.Join(t.Secondary, ", ")+")")
 			}
 			p("%s\n", line)
 			if opt.Verbose {
@@ -87,7 +94,7 @@ func WriteTerminal(w io.Writer, v *View, opt TerminalOptions) error {
 				break
 			}
 			p("  %s %s — %s\n", theme.Dot(t.Status), theme.Bold.Render(t.Name), t.KindTitle)
-			p("    %s\n", theme.Dim.Render(wrap(t.Explain, 96, "    ")))
+			p("    %s\n", dimLines(wrap(t.Explain, 96, "    ")))
 			for j, e := range t.Evidence {
 				if j >= 3 {
 					break
@@ -107,7 +114,7 @@ func WriteTerminal(w io.Writer, v *View, opt TerminalOptions) error {
 
 func writeDetails(sb *strings.Builder, t TargetView, indent string) {
 	if t.Status != model.StatusOK {
-		fmt.Fprintf(sb, "%s%s\n", indent, theme.Dim.Render(wrap(t.Explain, 92, indent)))
+		fmt.Fprintf(sb, "%s%s\n", indent, dimLines(wrap(t.Explain, 92, indent)))
 	}
 	for _, e := range t.Evidence {
 		fmt.Fprintf(sb, "%s· %s\n", indent, e)
@@ -160,6 +167,16 @@ func WriteWhitelist(w io.Writer, v *WhitelistView, verbose bool) error {
 	}
 	_, err := io.WriteString(w, sb.String())
 	return err
+}
+
+// dimLines renders each line separately, so lipgloss does not pad lines of a
+// multi-line block to the same width (which leaves trailing spaces).
+func dimLines(s string) string {
+	lines := strings.Split(s, "\n")
+	for i, l := range lines {
+		lines[i] = theme.Dim.Render(l)
+	}
+	return strings.Join(lines, "\n")
 }
 
 // wrap breaks text into lines of at most width runes.

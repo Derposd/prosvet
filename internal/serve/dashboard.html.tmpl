@@ -1,0 +1,46 @@
+{{define "dashboard"}}<!doctype html>
+<html lang="{{.V.Lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="prosvet-token" content="{{.Token}}">
+<title>{{.V.Labels.Title}}</title>
+<link rel="icon" href="{{.Favicon}}">
+<link rel="stylesheet" href="/prosvet.css">
+<script src="/app.js" defer></script>
+</head>
+<body{{if .Running}} data-running="1"{{end}}>
+<div class="wrap">
+  <header class="top">
+    {{.Logo}}
+    <div><div class="brand">Prosvet</div><div class="tagline">{{.V.Tagline}}</div></div>
+    <div class="meta">{{.V.Started}}{{if .V.Duration}} · {{.V.Duration}}{{end}}</div>
+  </header>
+
+  <section class="card" id="controls">
+    <div class="muted">{{.Dash.categories}}</div>
+    <p>{{range .Cats}}<label class="toggle" style="margin-right:14px"><input type="checkbox" name="cat" value="{{.ID}}"{{if .Checked}} checked{{end}}> {{.Title}}{{if .OptIn}} <span class="tag">opt-in</span>{{end}}</label>{{end}}</p>
+    <p style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn primary" id="run">{{.Dash.run}}</button>
+      <button class="btn" id="wl">{{.Dash.whitelist}}</button>
+      <button class="btn" id="cancel" hidden>{{.Dash.cancel}}</button>
+    </p>
+    <div id="progress" hidden>
+      <div class="progress"><i id="bar"></i></div>
+      <p class="muted" id="phase">{{.Dash.running}}</p>
+      <div id="live"></div>
+    </div>
+  </section>
+
+  {{if .V}}{{if or .V.Groups .V.Whitelist}}
+  {{range .V.Notices}}<div class="banner warn">⚠ {{.}}</div>{{end}}
+  {{template "report-body" .}}
+  <p class="muted">{{.Dash.download}}: <a href="/report.html" download>HTML</a> · <a href="/report.md" download>Markdown</a> · <a href="/report.json" download>JSON</a></p>
+  {{else}}<div class="card muted">{{.Dash.empty}}</div>{{end}}{{end}}
+
+  <footer>{{.Dash.local_only}}</footer>
+</div>
+</body>
+</html>
+{{end}}

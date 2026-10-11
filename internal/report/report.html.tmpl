@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="{{.V.Lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:">
+<title>{{.V.Labels.Title}}{{if .V.Network.ASN}} · {{.V.Network.ASN}}{{end}}</title>
+<link rel="icon" href="{{.Favicon}}">
+<style>{{.CSS}}</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    {{.Logo}}
+    <div><div class="brand">Prosvet</div><div class="tagline">{{.V.Tagline}}</div></div>
+    <div class="meta">{{.V.Started}}{{if .V.Duration}} · {{.V.Duration}}{{end}}</div>
+  </header>
+
+  {{if .V.Demo}}<div class="banner warn">⚠ {{.V.DemoBanner}}</div>{{end}}
+  {{range .V.Notices}}<div class="banner warn">⚠ {{.}}</div>{{end}}
+
+{{template "report-body" .}}
+  <footer>
+    {{if .V.Baseline}}<div>{{.V.Baseline}}</div>{{end}}
+    <div>{{.V.Labels.Generated}}</div>
+    <div>{{.V.Labels.PrivacyNote}}</div>
+  </footer>
+</div>
+</body>
+</html>
+
+{{define "report-body"}}
+  <section class="card">
+    <div class="muted">{{.V.Labels.Network}}</div>
+    <div><strong>{{.V.Network.Line}}</strong></div>
+  </section>
+
+  {{if .V.Groups}}
+  <section class="pills" aria-label="{{.V.Labels.Summary}}">
+    {{range .V.Counts}}<span class="pill s-{{.Status}}"><span class="dot"></span><b>{{.N}}</b> {{.Word}}</span>{{end}}
+  </section>
+
+  <p><label class="toggle"><input type="checkbox" id="only-issues"> {{.V.Labels.OnlyIssues}}</label></p>
+
+  {{end}}
+  {{range .V.Groups}}
+  <section>
+    <h2>{{.Title}}</h2>
+    {{range .Targets}}
+    <details class="target s-{{.Status}}">
+      <summary>
+        <span class="dot"></span>
+        <span class="name"><strong>{{.Name}}</strong></span>
+        <span class="st">{{.StatusText}}</span>
+        <span class="method">{{if ne (print .Status) "ok"}}{{.KindTitle}}{{if .Subtype}} — {{.Subtype}}{{end}} · {{.Confidence}}{{else}}{{range .Secondary}}<span class="tag">{{.}}</span>{{end}}{{end}}</span>
+      </summary>
+      <div class="body">
+        <p>{{.Explain}}</p>
+        {{if .Evidence}}<ul>{{range .Evidence}}<li>{{.}}</li>{{end}}</ul>{{end}}
+        {{if .Secondary}}<p class="muted">{{$.V.Labels.Secondary}}: {{range .Secondary}}<span class="tag">{{.}}</span>{{end}}</p>{{end}}
+        {{if .Endpoints}}
+        <table class="eps">
+          {{range .Endpoints}}<tr class="s-{{kindStatus .Kind}}"><td><span class="dot"></span> {{.Name}}</td><td>{{.KindTitle}}{{if .Subtype}} — {{.Subtype}}{{end}}{{if .Detail}}<div class="muted">{{.Detail}}</div>{{end}}</td></tr>{{end}}
+        </table>
+        {{end}}
+        {{if .Expect}}<p class="muted"><em>{{.Expect}}</em></p>{{end}}
+      </div>
+    </details>
+    {{end}}
+  </section>
+  {{end}}
+
+  {{with .V.DNS}}
+  <section>
+    <h2>{{$.V.Labels.DNS}}</h2>
+    <div class="card">
+      {{if .Findings}}<ul class="findings">{{range .Findings}}<li>{{.}}</li>{{end}}</ul>{{else}}<span class="muted">{{$.V.Labels.DNSNone}}</span>{{end}}
+      {{if .Resolvers}}<p>{{range .Resolvers}}<span class="tag {{if .OK}}s-ok{{else}}s-blocked{{end}}"><span class="dot"></span> {{.Name}} · {{.Transport}}</span>{{end}}</p>{{end}}
+    </div>
+  </section>
+  {{end}}
+
+  {{with .V.Whitelist}}
+  <section>
+    <h2>{{$.V.Labels.Whitelist}}</h2>
+    <div class="card s-{{wlStatus .Verdict}}">
+      <p><span class="dot"></span> <strong class="st">{{.Title}}</strong></p>
+      <p>{{.Explain}}</p>
+      <p class="muted">{{.Counts}}{{if .Level}} · {{.Level}}{{end}}</p>
+    </div>
+  </section>
+  {{end}}
+
+{{end}}

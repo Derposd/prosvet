@@ -162,7 +162,11 @@ func (a *app) render(rep *model.Report, cat *catalog.Catalog, format, output str
 		return report.WriteTerminal(w, v, report.TerminalOptions{Verbose: a.verbose})
 	case "json":
 		return report.WriteJSON(w, rep)
+	case "md", "markdown":
+		return report.WriteMarkdown(w, v)
+	case "html":
+		return report.WriteHTML(w, v)
 	default:
-		return fmt.Errorf("unknown format %q (terminal, json)", format)
+		return fmt.Errorf("unknown format %q (terminal, json, md, html)", format)
 	}
 }

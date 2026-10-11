@@ -13,6 +13,12 @@ status:
   unreachable: "No connectivity"
   unknown: "Unknown"
 
+summary:
+  ok: "work"
+  throttled: "throttled"
+  partial: "partially blocked"
+  blocked: "blocked"
+
 conf:
   high: "high confidence"
   medium: "medium confidence"
@@ -178,6 +184,8 @@ network:
   unknown: "unknown"
 
 report:
+  date: "Date"
+  only_issues: "Show only problems"
   problems: "What is wrong"
   endpoints: "Checked endpoints"
   evidence: "Evidence"
@@ -194,6 +202,50 @@ report:
   confidence: "Confidence"
   privacy_note: "This report contains no IP address and no device identifiers. Share it as you see fit."
 
+ui:
+  menu:
+    scan: "Full check"
+    scan_hint: "all default categories, ~2–4 minutes"
+    categories: "Choose categories…"
+    categories_hint: "check only what you need"
+    whitelist: "Whitelist mode check"
+    whitelist_hint: "is only the allow-list of services reachable?"
+    last: "Last report"
+    last_hint: "open the saved results"
+    quit: "Quit"
+  detecting: "Detecting network…"
+  consent_title: "Before the first check"
+  consent_keys: "y — continue · n — cancel"
+  categories_title: "Categories"
+  categories_keys: "space — toggle · enter — start · esc — back"
+  opt_in: "opt-in"
+  scanning: "Checking"
+  done: "Done"
+  results_keys: "↑/↓ move · f problems only · e export · w whitelist · r re-run · esc menu · q quit"
+  menu_keys: "↑/↓ move · enter select · q quit"
+  progress_keys: "esc — cancel"
+  wl_keys: "esc — back · q — quit"
+  export_title: "Export report"
+  export_keys: "enter — save · esc — back"
+  exported: "Saved: {path}"
+  no_report: "No saved report yet — run a check first."
+  filter_on: "showing problems only"
+  endpoints: "Endpoints"
+  evidence: "Evidence"
+  why: "What it means"
+  cancelled: "Cancelled"
+
+dash:
+  title: "Prosvet dashboard"
+  run: "Run check"
+  whitelist: "Whitelist check"
+  cancel: "Cancel"
+  categories: "Categories"
+  running: "Check in progress…"
+  empty: "No results yet. Choose categories and press “Run check”. Everything runs on your computer."
+  download: "Download"
+  local_only: "This dashboard is only reachable from this computer (127.0.0.1)."
+
 cli:
   short: "Network diagnostics & censorship measurement"
   long: "Prosvet checks which services are blocked or throttled on your network and explains how: DNS tampering, IP blocking, DPI by SNI, TLS resets, throttling, QUIC filtering and whitelist mode. Nothing is sent anywhere unless you run `prosvet submit`."
@@ -207,7 +259,6 @@ cli:
     targets: "Testing services…"
     dns: "Comparing DNS resolvers…"
     whitelist: "Checking domestic and foreign control sites…"
-  summary: "{ok} work · {throttled} throttled · {partial} partial · {blocked} blocked"
   saved: "Report saved: {path}"
   details_hint: "Details: prosvet report --format html -o report.html"
   baseline: "Domestic reference speed: {kbps} kbit/s"
@@ -215,6 +266,7 @@ cli:
   no_report: "No saved report found. Run `prosvet scan` first."
   submit_written: "Anonymous result file written: {path}"
   submit_next: "Send it via a pull request or attach it to an issue: {url}"
+  submit_confirm: "Write this file? [y/N] "
   submit_preview: "This is exactly what will be shared (no IP address, no device data):"
   targets_header: "Available targets"
   demo_note: "This is a demonstration on a simulated censored network running on your computer."
