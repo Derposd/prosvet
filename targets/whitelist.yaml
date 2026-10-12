@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=schema.json
 # Sets for `prosvet whitelist` (docs/research.md §5.8, §7.3).
 #
 # domestic: services from the Ministry of Digital Development lists, spread across ≥6 companies/ASNs.

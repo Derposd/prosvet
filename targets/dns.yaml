@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=schema.json
 # DNS resolvers and interception probes (docs/research.md §5.1).
 #
 # resolvers:      every probe domain is resolved through each resolver and transport.

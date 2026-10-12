@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=schema.json
 # CDN and hosting providers, used mainly for the "TCP 16-20" freeze test (docs/research.md §5.5).
 # Every throttle_url must point to a public, stable file well over 34 KB; Prosvet reads at most 256 KB.
 # role: baseline marks domestic mirrors used as the speed reference. They are not classified as targets.

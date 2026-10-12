@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=schema.json
 version: 1
 category: social
 title: { ru: "Соцсети", en: "Social networks" }

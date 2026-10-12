@@ -9,3 +9,9 @@ import "embed"
 //
 //go:embed *.yaml
 var FS embed.FS
+
+// Schema is the JSON Schema for the YAML files in this directory. It powers
+// editor completion and is verified against every file by schema_test.go.
+//
+//go:embed schema.json
+var Schema []byte

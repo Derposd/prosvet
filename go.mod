@@ -9,6 +9,7 @@ require (
 	github.com/miekg/dns v1.1.73
 	github.com/muesli/termenv v0.16.0
 	github.com/quic-go/quic-go v0.63.0
+	github.com/santhosh-tekuri/jsonschema/v6 v6.0.3
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/image v0.47.0
 	golang.org/x/sys v0.49.0
