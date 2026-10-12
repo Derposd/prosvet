@@ -34,9 +34,17 @@ jobs:
           BODY: ${{ github.event.issue.body }} # untrusted: only ever passed through an env var
         run: |
           printf '%s' "$BODY" > "$RUNNER_TEMP/body.md"
-          path=$(go run ./cmd/prosvet-map -results results -issue "$RUNNER_TEMP/body.md")
-          echo "path=$path" >> "$GITHUB_OUTPUT"
+          # The validator's message may echo user input, so it is never printed
+          # to the log (where "::" lines would be workflow commands).
+          if path=$(go run ./cmd/prosvet-map -results results -issue "$RUNNER_TEMP/body.md" 2> "$RUNNER_TEMP/reason.txt"); then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            echo "path=$path" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "Submission rejected by the validator."
+          fi
       - name: Open a pull request
+        if: steps.extract.outputs.ok == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           ISSUE: ${{ github.event.issue.number }}
@@ -55,10 +63,26 @@ jobs:
               --body "Created automatically from #${ISSUE}. The file passed validation (format, value ranges, no IP addresses). Closes #${ISSUE}."
           fi
           gh issue comment "$ISSUE" --body "✅ Thank you! The file is valid; a pull request was opened and will appear on the map after merge. / Спасибо! Файл корректен, открыт pull request — данные появятся на карте после слияния."
-      - name: Explain the failure
+      - name: Explain the rejection
+        if: steps.extract.outputs.ok == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+        run: |
+          {
+            echo "❌ The submission did not pass validation. Please paste the file produced by \`prosvet submit\` without changes."
+            echo "Отправка не прошла проверку. Вставьте файл, созданный \`prosvet submit\`, без изменений."
+            echo
+            echo '```text'
+            head -c 600 "$RUNNER_TEMP/reason.txt" | sed 's/```//g'
+            echo
+            echo '```'
+          } > "$RUNNER_TEMP/comment.md"
+          gh issue comment "$ISSUE" --body-file "$RUNNER_TEMP/comment.md"
+      - name: Report unexpected errors
         if: failure()
         env:
           GH_TOKEN: ${{ github.token }}
           ISSUE: ${{ github.event.issue.number }}
         run: |
-          gh issue comment "$ISSUE" --body "❌ The submission could not be processed: the JSON is missing or did not pass validation. Please paste the file produced by \`prosvet submit\` without changes. / Не удалось обработать отправку: JSON отсутствует или не прошёл проверку. Вставьте файл, созданный \`prosvet submit\`, без изменений."
+          gh issue comment "$ISSUE" --body "⚠️ The bot hit an unexpected error while processing this submission; a maintainer will look at it. / Бот столкнулся с непредвиденной ошибкой; мейнтейнер посмотрит вручную."
