@@ -1,0 +1,25 @@
+{
+  "schema": "prosvet.submission/v1",
+  "tool": {
+    "name": "prosvet",
+    "version": "0.1.0"
+  },
+  "date": "2026-10-12",
+  "network": {
+    "asn": 64500,
+    "isp": "Pipeline Self-Test (documentation ASN)",
+    "country": "RU",
+    "region": "RU-MOW",
+    "conn": "fixed"
+  },
+  "results": [
+    {
+      "target": "telegram",
+      "category": "messengers",
+      "status": "blocked",
+      "kind": "ip_block",
+      "subtype": "drop",
+      "confidence": "high"
+    }
+  ]
+}
