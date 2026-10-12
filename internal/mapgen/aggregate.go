@@ -111,11 +111,17 @@ type obs struct {
 
 // Aggregate builds the map data from valid submissions.
 func Aggregate(entries []Entry, cat *catalog.Catalog, now time.Time) *Data {
+	// Empty slices (not nil) so the JSON has [] instead of null: the
+	// front-end must work before the first submission arrives.
 	d := &Data{
-		Generated: now.UTC().Format(time.RFC3339),
-		Cells:     map[string]map[string]Cell{},
-		Timeline:  map[string][]Day{},
-		Events:    map[string][]Event{},
+		Generated:  now.UTC().Format(time.RFC3339),
+		Categories: []CategoryInfo{},
+		Targets:    []TargetInfo{},
+		Rows:       []Row{},
+		Regions:    []RegionInfo{},
+		Cells:      map[string]map[string]Cell{},
+		Timeline:   map[string][]Day{},
+		Events:     map[string][]Event{},
 	}
 	rows := map[string]*Row{}
 	series := map[string]map[string][]obs{} // row -> target -> observations (date order)

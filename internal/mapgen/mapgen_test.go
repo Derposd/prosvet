@@ -150,6 +150,28 @@ func TestBuildSiteAndIssue(t *testing.T) {
 	}
 }
 
+// Regression: before the first submission the live map received null lists
+// and the front-end crashed ("data/map.json could not be loaded").
+func TestEmptyMapUsesEmptyLists(t *testing.T) {
+	cat, _ := catalog.Load(targets.FS)
+	out := t.TempDir()
+	if _, _, err := Build(cat, Options{Results: filepath.Join(out, "missing"), Out: out}); err != nil {
+		t.Fatal(err)
+	}
+	raw, err := os.ReadFile(filepath.Join(out, "data", "map.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, key := range []string{"categories", "targets", "rows", "regions"} {
+		if !strings.Contains(string(raw), `"`+key+`":[]`) {
+			t.Errorf("%s must be an empty list, map.json: %.200s", key, raw)
+		}
+	}
+	if strings.Contains(string(raw), "null") {
+		t.Errorf("map.json must not contain null: %.300s", raw)
+	}
+}
+
 func TestSampleDataIsLabelled(t *testing.T) {
 	cat, _ := catalog.Load(targets.FS)
 	out := t.TempDir()

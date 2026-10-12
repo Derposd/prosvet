@@ -262,6 +262,13 @@
 
   fetch("data/map.json", { cache: "no-cache" })
     .then((r) => r.json())
-    .then((d) => { data = d; bind(); render(); })
+    .then((d) => {
+      // Tolerate older data files where empty lists were serialised as null.
+      ["categories", "targets", "rows", "regions"].forEach((k) => { d[k] = d[k] || []; });
+      ["cells", "timeline", "events", "i18n"].forEach((k) => { d[k] = d[k] || {}; });
+      data = d;
+      bind();
+      render();
+    })
     .catch(() => { $("empty").hidden = false; $("empty").textContent = "data/map.json could not be loaded"; });
 })();
