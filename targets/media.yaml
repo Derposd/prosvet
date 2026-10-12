@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=schema.json
 # Independent media and reference resources. This category is OPT-IN: `prosvet scan --category media`.
 # Your ISP can see that these sites were checked (docs/research.md §9).
 # Prosvet only checks reachability: it fetches the front page and stores no content.

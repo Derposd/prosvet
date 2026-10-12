@@ -49,6 +49,17 @@ Category fields: `consent: {ru, en}` is a prompt the user must accept before an 
 
 Other files use `kind:` instead of `targets:`. `dns.yaml` has `kind: resolvers` and `whitelist.yaml` has `kind: whitelist`. Their formats are documented in comments at the top of each file.
 
+## Editor support
+
+`schema.json` describes these files. Editors with the YAML language server (VS Code
+with the YAML extension, Neovim, Helix, ...) read the `# yaml-language-server: $schema=schema.json`
+comment at the top of each file and validate as you type, so a typo like an unknown `test`
+name is flagged before the pull request.
+
+`go test ./targets/` fails if any file stops matching the schema, so the lists and the schema
+stay in sync. The schema mirrors the loader in `internal/catalog`; when you add a field here,
+add it in both places and cover it with a test.
+
 ## Rules
 
 - No circumvention endpoints: no proxies, VPN servers or "whitelisted SNI" lists.

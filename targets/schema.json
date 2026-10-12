@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Derposd/prosvet/targets/schema.json",
+  "title": "Prosvet target list",
+  "description": "Schema for the YAML files in targets/. Enables completion and validation in editors that support the YAML language server. The Go loader in internal/catalog remains the source of truth for semantics; this file mirrors its accepted shape.",
+  "type": "object",
+  "required": ["version", "category", "title", "default"],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "kind": {
+      "type": "string",
+      "enum": ["resolvers", "whitelist"],
+      "description": "Files that are not plain target categories declare their kind here."
+    },
+    "category": { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+    "title": { "$ref": "#/$defs/text" },
+    "default": { "type": "boolean" },
+    "order": { "type": "integer", "minimum": 0 },
+    "consent": { "$ref": "#/$defs/text" }
+  },
+  "allOf": [
+    { "$ref": "#/$defs/categoryFile" },
+    { "$ref": "#/$defs/resolversFile" },
+    { "$ref": "#/$defs/whitelistFile" }
+  ],
+  "$defs": {
+    "text": {
+      "description": "Localised string map ({ru, en}) or a plain string.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "object", "additionalProperties": { "type": "string" } }
+      ]
+    },
+    "categoryFile": {
+      "description": "A plain category file has no kind and lists targets.",
+      "properties": { "targets": { "type": "array", "items": { "$ref": "#/$defs/target" } } }
+    },
+    "resolversFile": {
+      "properties": {
+        "resolvers": { "type": "array", "items": { "$ref": "#/$defs/resolver" } },
+        "doh_reference_order": { "type": "array", "items": { "type": "string" } },
+        "probe_domains": { "type": "array", "items": { "$ref": "#/$defs/probeDomain" } },
+        "interception": { "type": "array", "items": { "$ref": "#/$defs/interception" } }
+      }
+    },
+    "whitelistFile": {
+      "properties": {
+        "refs": { "type": "array", "items": { "type": "string" } },
+        "thresholds": {
+          "type": "object",
+          "properties": {
+            "domestic_ok": { "type": "number" },
+            "foreign_max": { "type": "number" },
+            "dead": { "type": "number" },
+            "normal": { "type": "number" }
+          },
+          "additionalProperties": false
+        },
+        "domestic": { "type": "array", "items": { "$ref": "#/$defs/whitelistHost" } },
+        "foreign": { "type": "array", "items": { "$ref": "#/$defs/whitelistHost" } }
+      }
+    },
+    "target": {
+      "type": "object",
+      "required": ["id", "name", "endpoints"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "enum": ["control", "baseline"] },
+        "expect": { "type": "string", "enum": ["ok", "throttled", "partial", "blocked", "unknown"] },
+        "since": { "type": "string" },
+        "refs": { "type": "array", "items": { "type": "string" } },
+        "notes": { "$ref": "#/$defs/text" },
+        "throttle_url": { "type": "string", "format": "uri" },
+        "verified": { "type": "boolean" },
+        "endpoints": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/endpoint" } }
+      },
+      "additionalProperties": false
+    },
+    "endpoint": {
+      "type": "object",
+      "properties": {
+        "host": { "type": "string" },
+        "addr": { "type": "string" },
+        "port": { "type": "integer", "minimum": 1, "maximum": 65535 },
+        "path": { "type": "string" },
+        "quic": { "type": "boolean" },
+        "http80": { "type": "boolean" },
+        "tests": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["dns", "tcp", "tls", "tls_nosni", "http", "quic", "ech"] }
+        },
+        "quic_versions": { "type": "array", "items": { "type": "integer" } },
+        "note": { "type": "string" }
+      },
+      "oneOf": [
+        { "required": ["host"], "not": { "required": ["addr"] } },
+        { "required": ["addr"], "not": { "required": ["host"] } }
+      ],
+      "additionalProperties": false
+    },
+    "resolver": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "$ref": "#/$defs/text" },
+        "type": { "type": "string", "enum": ["system", "udp", "doh", "dot"] },
+        "role": { "type": "string" },
+        "refs": { "type": "array", "items": { "type": "string" } },
+        "udp": { "type": "array", "items": { "type": "string" } },
+        "dot": {
+          "type": "object",
+          "properties": { "host": { "type": "string" }, "addr": { "type": "string" } },
+          "additionalProperties": false
+        },
+        "doh": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "probeDomain": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "interception": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "resolver": { "type": "string" },
+        "qname": { "type": "string" },
+        "qclass": { "type": "string" },
+        "qtype": { "type": "string" },
+        "expect": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "whitelistHost": {
+      "type": "object",
+      "required": ["host"],
+      "properties": {
+        "host": { "type": "string" },
+        "org": { "type": "string" },
+        "ca": { "type": "string", "enum": ["russian-trusted"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}
